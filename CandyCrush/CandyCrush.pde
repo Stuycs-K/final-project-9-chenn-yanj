@@ -18,3 +18,7 @@ void drawSquares() {
     }
   }
 }
+
+void displayCandies() {
+  
+}
