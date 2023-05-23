@@ -1,18 +1,19 @@
 public class Candy{
-  private int [] candy;
+  private String [] candy;
   private String colors;
-  private String type;
+  
+  public Candy(, String c){
+    candy = new String[]{"blueball", "purpleflower", "orangeoval", "greensquare", "yellowtriangle", "redbean"};
+    this.colors = c
+  }
   
   public String getColor(){
-    return "";
+    return colors;
   }
   
-  public String getType(){
-    return "";
-  }
-  
-  public String randomCandy(){
-    return"";
+  public static String randomCandy(){
+   int index = (int)random(0,6);
+   return (Candy[index]);
   }
   
   public boolean validCandy(){
