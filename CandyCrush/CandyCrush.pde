@@ -8,6 +8,8 @@ void setup() {
   COLS = 9;
   SQUARESIZE = width/COLS;
   drawSquares();
+  Board b1 = new Board(9);
+  b1.displayCandies(SQUARESIZE);
 }
 
 void drawSquares() {
@@ -17,8 +19,4 @@ void drawSquares() {
       square(x,y,SQUARESIZE);
     }
   }
-}
-
-void displayCandies() {
-  
 }
