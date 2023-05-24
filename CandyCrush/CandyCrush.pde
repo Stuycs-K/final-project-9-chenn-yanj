@@ -1,6 +1,10 @@
 int ROWS;
 int COLS;
 int SQUARESIZE;
+boolean firstClick = false;
+boolean secondClick = false;
+Candy initial;
+Candy second;
 Board b;
 
 void setup() {
@@ -12,29 +16,42 @@ void setup() {
   b = new Board(9);
 }
 
+void mouseClicked(){
+  if (firstClick) {
+    second = b.getCandy((int)(mouseX/9), (int)(mouseY/9));
+    secondClick = false;
+    b.swap(initial, second);
+  }
+  firstClick = true; 
+    initial = b.getCandy((int)(mouseX/9), (int)(mouseY/9));
+  
+}
+
+
 void draw() {
   for (int x = 0; x < b.size(); x++) {
       for (int y = 0; y < b.size(); y++) {
         Candy piece = b.getCandy(x, y);
         if (piece.getColor().equals("blue")) {
-          image(loadImage("blue.jpg"), x*SQUARESIZE, y*SQUARESIZE);
+          image(loadImage("blue.png"), x*SQUARESIZE, y*SQUARESIZE, 90, 90);
         }
         if (piece.getColor().equals("purple")) {
-          image(loadImage("purple.jpg"), x*SQUARESIZE, y*SQUARESIZE);
+          image(loadImage("purple.png"), x*SQUARESIZE, y*SQUARESIZE, 90, 90);
         }
         if (piece.getColor().equals("orange")) {
-          image(loadImage("orange.jpg"), x*SQUARESIZE, y*SQUARESIZE);
+          image(loadImage("orange.png"), x*SQUARESIZE, y*SQUARESIZE, 90, 90);
         }
         if (piece.getColor().equals("green")) {
-          image(loadImage("green.jpg"), x*SQUARESIZE, y*SQUARESIZE);
+          image(loadImage("green.png"), x*SQUARESIZE, y*SQUARESIZE, 90, 90);
         }
         if (piece.getColor().equals("yellow")) {
-          image(loadImage("yellow.jpg"), x*SQUARESIZE, y*SQUARESIZE);
+          image(loadImage("yellow.png"), x*SQUARESIZE, y*SQUARESIZE, 90, 90);
         }
         if (piece.getColor().equals("red")) {
-          image(loadImage("red.jpg"), x*SQUARESIZE, y*SQUARESIZE);
+          image(loadImage("red.png"), x*SQUARESIZE, y*SQUARESIZE, 90, 90);
         }
       }
+    
     }
 }
 
