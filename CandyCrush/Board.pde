@@ -5,7 +5,7 @@ public class Board {
     board = new Candy[size][size];
     for (int x = 0; x < size; x++) {
       for (int y = 0; y < size; y++) {
-        board[x][y] = new Candy(randomCandy());
+        board[x][y] = new Candy(randomCandy(), x, y);
       }
     }
   }
@@ -22,6 +22,14 @@ public class Board {
   
   Candy getCandy(int x, int y) {
     return board[x][y];
+  }
+  
+  void swap(Candy first, Candy second) {
+    if (validmove()){
+      board[second.getX()][second.getY()] = first;
+      board[first.getX()][first.getY()] = second;
+      
+    }
   }
   
 }
