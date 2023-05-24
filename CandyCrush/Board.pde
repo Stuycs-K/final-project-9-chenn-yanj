@@ -44,7 +44,12 @@ public class Board {
     int y1 = one.getY();
     int x2 = two.getX();
     int y2 = two.getY();
-    if ( x1 - 1 == x2 || x1 + 1 == x2 || y1 - 1 == y2 || y1 + 1 == y2 ) return true;
+    if ( x1 - 1 == x2 || x1 + 1 == x2 ) {
+      if (y1 == y2 ) return true;
+    }
+    if ( y1 - 1 == y2 || y1 + 1 == y2 ) {
+      if (x1 == x2) return true;
+    }
     return false;
   }
   

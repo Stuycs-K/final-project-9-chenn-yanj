@@ -11,7 +11,6 @@ void setup() {
   ROWS = 9;
   COLS = 9;
   SQUARESIZE = width/COLS;
-  drawSquares();
   b = new Board(9);
 }
 
@@ -30,6 +29,8 @@ void mouseClicked(){
 
 
 void draw() {
+  clear();
+  drawSquares();
   for (int x = 0; x < b.size(); x++) {
       for (int y = 0; y < b.size(); y++) {
         Candy piece = b.getCandy(x, y);
