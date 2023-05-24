@@ -25,16 +25,27 @@ public class Board {
   }
   
   void swap(Candy first, Candy second) {
-    if (validmove()){
-      board[second.getX()][second.getY()] = first;
-      board[first.getX()][first.getY()] = second;
-      int tempX = first.getX();
-      int tempY = first.getY();
-      first.setX(second.getX());
-      first.setY(second.getY());
-      second.setX(tempX);
-      second.setY(tempY);
+    if (validMove(first, second)){
+      int x1 = first.getX();
+      int y1 = first.getY();
+      int x2 = second.getX();
+      int y2 = second.getY();
+      board[x2][y2] = first;
+      board[x1][y1] = second;
+      first.setX(x2);
+      first.setY(y2);
+      second.setX(x1);
+      second.setY(y1);
     }
+  }
+  
+  boolean validMove(Candy one, Candy two) {
+    int x1 = one.getX();
+    int y1 = one.getY();
+    int x2 = two.getX();
+    int y2 = two.getY();
+    if ( x1 - 1 == x2 || x1 + 1 == x2 || y1 - 1 == y2 || y1 + 1 == y2 ) return true;
+    return false;
   }
   
 }

@@ -1,8 +1,7 @@
 int ROWS;
 int COLS;
 int SQUARESIZE;
-boolean firstClick = false;
-boolean secondClick = false;
+boolean click = false;
 Candy initial;
 Candy second;
 Board b;
@@ -17,13 +16,15 @@ void setup() {
 }
 
 void mouseClicked(){
-  if (firstClick) {
-    second = b.getCandy((int)(mouseX/9), (int)(mouseY/9));
-    secondClick = false;
+  if (click) {
+    second = b.getCandy((int)(mouseX/SQUARESIZE), (int)(mouseY/SQUARESIZE));
     b.swap(initial, second);
+    click = false;
   }
-  firstClick = true; 
-    initial = b.getCandy((int)(mouseX/9), (int)(mouseY/9));
+  else { 
+    click = true; 
+    initial = b.getCandy((int)(mouseX/SQUARESIZE), (int)(mouseY/SQUARESIZE));
+  }
   
 }
 
