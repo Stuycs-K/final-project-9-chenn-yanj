@@ -28,7 +28,12 @@ public class Board {
     if (validmove()){
       board[second.getX()][second.getY()] = first;
       board[first.getX()][first.getY()] = second;
-      
+      int tempX = first.getX();
+      int tempY = first.getY();
+      first.setX(second.getX());
+      first.setY(second.getY());
+      second.setX(tempX);
+      second.setY(tempY);
     }
   }
   
