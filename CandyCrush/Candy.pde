@@ -20,6 +20,14 @@ public class Candy{
     return y;
   }
   
+  void setX(int newX) {
+    x = newX;
+  }
+  
+  void setY(int newY) {
+    y = newY;
+  }
+  
   String getColor(){
     return colors;
   }
