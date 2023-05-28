@@ -26,6 +26,14 @@ updated Swap method to include X & Y
 Started validMove()
   Creating horizontalLink() + verticalLink() method
 
+### May 27th, 2023
+finished updating validMove() (only applicable to 3 candy links)
+included helper methods canMove + horizontalLink + verticalLink
+canMove - check if possible not our of bound
+hoizontalLink checks if 3 candies are in a row
+VericalLink checks if 3 are in a row verically
+
+
 ## GROUP MEMBER 2
 
 ### date x
