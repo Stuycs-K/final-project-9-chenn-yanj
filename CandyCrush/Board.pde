@@ -39,17 +39,57 @@ public class Board {
     }
   }
   
+   boolean canMove(int i, int x){
+       if(i >= 0 && i<=board.length-1 && x>=0 && x<=board[0].length-1){
+           return true;    
+     }
+     return false;
+   }
+   
+  
+  boolean verticalLink(Candy one, Candy two){
+    // check to see if new position makes a vertical link
+    // made for links of 3
+     int x2 = two.getX();
+     int y2 = two.getY();
+     if( (canMove(x2-1,y2) && getCandy(x2-1,y2) == one) ||
+          (canMove(x2+1,y2) && getCandy(x2-1,y2)== one)) return true;
+     if( (canMove(x2-1,y2) && getCandy(x2-1,y2)== one) ||
+          (canMove(x2-2,y2) && getCandy(x2-2,y2)== one)) return true;
+     if( (canMove(x2+1,y2) && getCandy(x2+1,y2)== one) ||
+          (canMove(x2+2,y2) &&getCandy(x2+2,y2)== one)) return true;
+     else return false;
+  }
+  
+  boolean horizontalLink(Candy one, Candy two){
+     // made for links of 3
+     int x2 = two.getX();
+     int y2 = two.getY();
+     if( (canMove(x2,y2-1) && getCandy(x2,y2-1)== one) ||
+          (canMove(x2,y2+1) &&getCandy(x2,y2+1)== one)) return true;
+     if( (canMove(x2,y2-1) && getCandy(x2,y2-1)== one) ||
+          (canMove(x2,y2-2) &&getCandy(x2,y2-2)== one)) return true;
+     if( (canMove(x2,y2+1) && getCandy(x2,y2+1)== one) ||
+          (canMove(x2,y2+2) &&getCandy(x2,y2+2)== one)) return true;
+     else return false;
+  }
+  
   boolean validMove(Candy one, Candy two) {
     int x1 = one.getX();
     int y1 = one.getY();
     int x2 = two.getX();
     int y2 = two.getY();
     if ( x1 - 1 == x2 || x1 + 1 == x2 ) {
-      if (y1 == y2 ) return true;
+      if (y1 == y2 ){
+        if(verticalLink(one, two) || horizontalLink(one, two)) return true;
+      }
     }
     if ( y1 - 1 == y2 || y1 + 1 == y2 ) {
-      if (x1 == x2) return true;
+      if (x1 == x2){
+        if(verticalLink(one, two) || horizontalLink(one, two)) return true;
+      }
     }
+    text("not working",765,50);
     return false;
   }
   
