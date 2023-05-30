@@ -49,7 +49,7 @@ public class Board {
    }
    
   
-  boolean verticalLink(Candy one, Candy two){
+  boolean horizontalLink(Candy one, Candy two){
     // check to see if new position makes a vertical link
     // made for links of 3
      int x2 = two.getX();
@@ -63,7 +63,7 @@ public class Board {
      else return false;
   }
   
-  boolean horizontalLink(Candy one, Candy two){
+  boolean verticalLink(Candy one, Candy two){
      // made for links of 3
      int x2 = two.getX();
      int y2 = two.getY();
@@ -94,5 +94,37 @@ public class Board {
     text("not working",765,50);
     return false;
   }
+  
+  boolean compareH(int x, int y) {
+    Candy a = getCandy(x-1, y);
+    Candy b = getCandy(x, y);
+    Candy c = getCandy(x+1, y);
+    return (a.getColor().equals(b.getColor()) && a.getColor().equals(c.getColor()));
+  }
+  
+  boolean compareV(int x, int y) {
+    Candy a = getCandy(x, y-1);
+    Candy b = getCandy(x, y);
+    Candy c = getCandy(x, y+1);
+    return (a.getColor().equals(b.getColor()) && a.getColor().equals(c.getColor()));
+  }
+  
+  void crush() {
+    for (int x = 1; x<size()-1; x++) {
+      for (int y = 1; y<size()-1; y++) {
+        if (compareH(x, y)) {
+          board[x-1][y] = new Candy("", -1, -1);
+          board[x][y] = new Candy("", -1, -1);
+          board[x+1][y] = new Candy("", -1, -1);
+        }
+        if (compareV(x, y)) {
+          board[x][y-1] = new Candy("", -1, -1);
+          board[x][y] = new Candy("", -1, -1);
+          board[x][y+1] = new Candy("", -1, -1);
+        }
+      }
+    }
+  }
+  
   
 }
