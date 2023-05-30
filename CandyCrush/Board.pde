@@ -39,9 +39,11 @@ public class Board {
     }
   }
   
-   boolean canMove(int i, int x){
+   boolean canMove(int i, int x, Candy piece){
        if(i >= 0 && i<=board.length-1 && x>=0 && x<=board[0].length-1){
+         if((board[i][x].getColor()).equals(piece.getColor())){
            return true;    
+         }
      }
      return false;
    }
@@ -52,12 +54,12 @@ public class Board {
     // made for links of 3
      int x2 = two.getX();
      int y2 = two.getY();
-     if( (canMove(x2-1,y2) && getCandy(x2-1,y2) == one) ||
-          (canMove(x2+1,y2) && getCandy(x2-1,y2)== one)) return true;
-     if( (canMove(x2-1,y2) && getCandy(x2-1,y2)== one) ||
-          (canMove(x2-2,y2) && getCandy(x2-2,y2)== one)) return true;
-     if( (canMove(x2+1,y2) && getCandy(x2+1,y2)== one) ||
-          (canMove(x2+2,y2) &&getCandy(x2+2,y2)== one)) return true;
+     if( canMove(x2-1,y2,one) &&
+          canMove(x2+1,y2,one) ) return true;
+     if( canMove(x2-1,y2,one) &&
+          canMove(x2-2,y2,one) ) return true;
+     if(  canMove(x2+1,y2,one) &&
+         canMove(x2+2,y2,one)) return true;
      else return false;
   }
   
@@ -65,12 +67,12 @@ public class Board {
      // made for links of 3
      int x2 = two.getX();
      int y2 = two.getY();
-     if( (canMove(x2,y2-1) && getCandy(x2,y2-1)== one) ||
-          (canMove(x2,y2+1) &&getCandy(x2,y2+1)== one)) return true;
-     if( (canMove(x2,y2-1) && getCandy(x2,y2-1)== one) ||
-          (canMove(x2,y2-2) &&getCandy(x2,y2-2)== one)) return true;
-     if( (canMove(x2,y2+1) && getCandy(x2,y2+1)== one) ||
-          (canMove(x2,y2+2) &&getCandy(x2,y2+2)== one)) return true;
+     if( canMove(x2,y2-1,one) &&
+          canMove(x2,y2+1,one)) return true;
+     if( canMove(x2,y2-1,one)&&
+          canMove(x2,y2-2,one)) return true;
+     if( canMove(x2,y2+1,one) &&
+          canMove(x2,y2+2,one)) return true;
      else return false;
   }
   
