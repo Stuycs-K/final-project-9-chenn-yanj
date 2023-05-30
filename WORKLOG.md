@@ -34,12 +34,20 @@ hoizontalLink checks if 3 candies are in a row
 VericalLink checks if 3 are in a row verically
 
 
-## GROUP MEMBER 2
+## NIKI
 
-### date x
+### May 22nd, 2023
+setup game by drawing 9 by 9 grid
 
-info
+### May 23rd, 2023
+Initialized Board array in constructor with randomCandy()
+draw() to load and display candies on grid
 
-### date y
+### May 24th, 2023
+swap() to switch two selected candies on board array
+included fields x and y to Candy to better track candies
+validMove() just to check if selected candies are next to each other (left, right, up, down)
+clear() to reflect new changes every tick (no overlapping candies)
 
-info
+### May 25th, 2023
+started crush() to remove completed links on board
