@@ -19,6 +19,7 @@ void mouseClicked(){
     second = b.getCandy((int)(mouseX/SQUARESIZE), (int)(mouseY/SQUARESIZE));
     b.swap(initial, second);
     click = false;
+    b.crush();
   }
   else { 
     click = true; 
@@ -53,8 +54,8 @@ void draw() {
           image(loadImage("red.png"), x*SQUARESIZE, y*SQUARESIZE, 90, 90);
         }
       }
-    
-    }
+  }
+  b.crush();
 }
 
 void drawSquares() {
