@@ -130,5 +130,24 @@ public class Board {
     }
   }
   
+  void pushdown(int x, int y){
+    if(y == 0 && board[x][y].getColor().equals("")){
+      board[x][y] = new Candy(randomCandy(), x, y);
+    }
+    else if(board[x][y].getColor().equals("")){
+      board[x][y] = board[x][y-1];
+      board[x][y-1] = new Candy("", -1, -1);
+      pushdown(x, y-1); 
+    }
+  }
+  
+  void gravity(){
+    for( int x = 0; x< size(); x ++){
+      for(int y = 0; y< size(); y ++){
+        pushdown(x,y);
+      }
+    }
+  }
+  
   
 }
