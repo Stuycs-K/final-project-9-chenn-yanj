@@ -56,6 +56,7 @@ void draw() {
       }
   }
   b.crush();
+  b.gravity();
 }
 
 void drawSquares() {
