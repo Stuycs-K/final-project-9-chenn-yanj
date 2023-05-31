@@ -35,7 +35,11 @@ VerticalLink checks if 3 are in a row vertically
 
 ### May 29th, 2023
 merged canMove() and getCandy into one method
-changed horizontal/vertical method to only check for the three combinations of links 
+changed horizontal/vertical method to only check for the three combinations of links
+
+### May 30th, 2023
+added a movedown method + gravity method -> shifts candy down
+adjusted draw + mouseClicked in CandyCrush
 
 
 ## NIKI
