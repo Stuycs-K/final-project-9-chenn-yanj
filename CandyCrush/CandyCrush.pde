@@ -20,6 +20,7 @@ void mouseClicked(){
     b.swap(initial, second);
     click = false;
     b.crush();
+    b.gravity();
   }
   else { 
     click = true; 
