@@ -111,12 +111,16 @@ public class Board {
   
   void crush() {
     for (int x = 1; x<size()-1; x++) {
-      for (int y = 1; y<size()-1; y++) {
+      for (int y = 0; y<size(); y++) {
         if (compareH(x, y)) {
           board[x-1][y] = new Candy("", -1, -1);
           board[x][y] = new Candy("", -1, -1);
           board[x+1][y] = new Candy("", -1, -1);
         }
+      }
+    }
+    for (int x = 0; x<size(); x++) {
+      for (int y = 1; y<size()-1; y++) {
         if (compareV(x, y)) {
           board[x][y-1] = new Candy("", -1, -1);
           board[x][y] = new Candy("", -1, -1);
