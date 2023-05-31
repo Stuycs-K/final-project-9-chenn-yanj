@@ -20,6 +20,7 @@ void mouseClicked(){
     b.swap(initial, second);
     click = false;
     b.crush();
+    b.gravity();
   }
   else { 
     click = true; 
@@ -56,6 +57,7 @@ void draw() {
       }
   }
   b.crush();
+  b.gravity();
 }
 
 void drawSquares() {

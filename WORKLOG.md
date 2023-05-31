@@ -30,8 +30,16 @@ Started validMove()
 finished updating validMove() (only applicable to 3 candy links)
 included helper methods canMove + horizontalLink + verticalLink
 canMove - check if possible not our of bound
-hoizontalLink checks if 3 candies are in a row
-VericalLink checks if 3 are in a row verically
+horizontalLink checks if 3 candies are in a row
+VerticalLink checks if 3 are in a row vertically
+
+### May 29th, 2023
+merged canMove() and getCandy into one method
+changed horizontal/vertical method to only check for the three combinations of links
+
+### May 30th, 2023
+added a movedown method + gravity method -> shifts candy down
+adjusted draw + mouseClicked in CandyCrush
 
 
 ## NIKI
