@@ -24,10 +24,7 @@ void keyPressed() {
 void mouseClicked(){
 
   if (click) {
-    fill (255, 255, 194);
     second = b.getCandy((int)(mouseX/SQUARESIZE), (int)(mouseY/SQUARESIZE));
-    square((int)(mouseX/SQUARESIZE)*SQUARESIZE, (int)(mouseY/SQUARESIZE), SQUARESIZE);
-    noFill();
     b.swap(initial, second);
     click = false;
     b.crush();
@@ -35,10 +32,7 @@ void mouseClicked(){
   }
   else { 
     click = true; 
-    fill (255, 255, 194);
     initial = b.getCandy((int)(mouseX/SQUARESIZE), (int)(mouseY/SQUARESIZE));
-    square((int)(mouseX/SQUARESIZE)*SQUARESIZE, (int)(mouseY/SQUARESIZE)*SQUARESIZE, SQUARESIZE);
-    noFill();
   }
 }
 
