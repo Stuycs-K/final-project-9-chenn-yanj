@@ -44,6 +44,7 @@ void mouseClicked(){
 
 void draw() {
   drawSquares();
+  background(img);
   for (int x = 0; x < b.size(); x++) {
       for (int y = 0; y < b.size(); y++) {
         Candy piece = b.getCandy(x, y);
