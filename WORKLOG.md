@@ -59,3 +59,7 @@ clear() to reflect new changes every tick (no overlapping candies)
 
 ### May 25th, 2023
 started crush() to remove completed links on board
+
+### May 30th, 2023
+wrote crush() to remove links when board is first generated and when user makes a swap
+compareH() and compareV() helper methods to compare the candies around a coordinate
