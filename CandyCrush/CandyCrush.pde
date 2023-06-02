@@ -26,12 +26,9 @@ void mouseClicked(){
     click = true; 
     initial = b.getCandy((int)(mouseX/SQUARESIZE), (int)(mouseY/SQUARESIZE));
   }
-  
 }
 
-
 void draw() {
-  clear();
   drawSquares();
   for (int x = 0; x < b.size(); x++) {
       for (int y = 0; y < b.size(); y++) {
