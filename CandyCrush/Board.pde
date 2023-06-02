@@ -9,7 +9,6 @@ public class Board {
       }
     }
   }
-  
   String randomCandy() {
     String[] candies = {"blue", "purple", "orange", "green", "yellow", "red"};
     int index = (int)(random(0,6));
@@ -55,11 +54,17 @@ public class Board {
      int x2 = two.getX();
      int y2 = two.getY();
      if( canMove(x2-1,y2,one) &&
-          canMove(x2+1,y2,one) ) return true;
-     if( canMove(x2-1,y2,one) &&
-          canMove(x2-2,y2,one) ) return true;
+          canMove(x2+1,y2,one) && 
+          board[x2-1][y2] != one && 
+          board[x2+1][y2] != one) return true;
+     if(  canMove(x2-1,y2,one) &&
+          canMove(x2-2,y2,one) &&
+          board[x2-1][y2] != one && 
+          board[x2-2][y2] != one) return true;
      if(  canMove(x2+1,y2,one) &&
-         canMove(x2+2,y2,one)) return true;
+          canMove(x2+2,y2,one) &&
+          board[x2+1][y2] != one && 
+          board[x2+2][y2] != one) return true;
      else return false;
   }
   
@@ -68,11 +73,17 @@ public class Board {
      int x2 = two.getX();
      int y2 = two.getY();
      if( canMove(x2,y2-1,one) &&
-          canMove(x2,y2+1,one)) return true;
+          canMove(x2,y2+1,one) &&
+          board[x2][y2-1] != one && 
+          board[x2][y2+1] != one) return true;
      if( canMove(x2,y2-1,one)&&
-          canMove(x2,y2-2,one)) return true;
+          canMove(x2,y2-2,one) &&
+          board[x2][y2-1] != one && 
+          board[x2][y2-2] != one) return true;
      if( canMove(x2,y2+1,one) &&
-          canMove(x2,y2+2,one)) return true;
+          canMove(x2,y2+2,one) &&
+          board[x2][y2+1] != one && 
+          board[x2][y2+2] != one) return true;
      else return false;
   }
   
@@ -136,6 +147,7 @@ public class Board {
     }
     else if(board[x][y].getColor().equals("")){
       board[x][y] = board[x][y-1];
+      board[x][y].setY(y);
       board[x][y-1] = new Candy("", -1, -1);
       pushdown(x, y-1); 
     }
@@ -149,6 +161,7 @@ public class Board {
     }
   }
   
+<<<<<<< HEAD
   
  boolean noMoreLinks(){
    boolean result = true;
@@ -180,4 +193,6 @@ public class Board {
     }
   }
   
+=======
+>>>>>>> cb4ecbe3a66ba7517229578a3fbf4d900b645773
 }

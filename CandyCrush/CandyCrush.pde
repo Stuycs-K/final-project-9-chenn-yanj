@@ -17,6 +17,10 @@ void setup() {
   b = new Board(9);
 }
 
+void keyPressed() {
+  if (key == ' ') b = new Board(9);
+}
+
 void mouseClicked(){
 
   if (click) {
@@ -36,12 +40,9 @@ void mouseClicked(){
     square((int)(mouseX/SQUARESIZE)*SQUARESIZE, (int)(mouseY/SQUARESIZE)*SQUARESIZE, SQUARESIZE);
     noFill();
   }
-  
 }
 
-
 void draw() {
-  clear();
   drawSquares();
   for (int x = 0; x < b.size(); x++) {
       for (int y = 0; y < b.size(); y++) {
