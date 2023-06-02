@@ -5,8 +5,11 @@ boolean click = false;
 Candy initial;
 Candy second;
 Board b;
+PImage img;
 
 void setup() {
+  img = loadImage("background.jpg");
+  background(img);
   size(810,810);
   ROWS = 9;
   COLS = 9;
@@ -15,8 +18,12 @@ void setup() {
 }
 
 void mouseClicked(){
+
   if (click) {
+    fill (255, 255, 194);
     second = b.getCandy((int)(mouseX/SQUARESIZE), (int)(mouseY/SQUARESIZE));
+    square((int)(mouseX/SQUARESIZE)*SQUARESIZE, (int)(mouseY/SQUARESIZE), SQUARESIZE);
+    noFill();
     b.swap(initial, second);
     click = false;
     b.crush();
@@ -24,7 +31,10 @@ void mouseClicked(){
   }
   else { 
     click = true; 
+    fill (255, 255, 194);
     initial = b.getCandy((int)(mouseX/SQUARESIZE), (int)(mouseY/SQUARESIZE));
+    square((int)(mouseX/SQUARESIZE)*SQUARESIZE, (int)(mouseY/SQUARESIZE)*SQUARESIZE, SQUARESIZE);
+    noFill();
   }
   
 }
@@ -58,6 +68,7 @@ void draw() {
   }
   b.crush();
   b.gravity();
+ 
 }
 
 void drawSquares() {

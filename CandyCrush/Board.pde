@@ -150,4 +150,34 @@ public class Board {
   }
   
   
+ boolean noMoreLinks(){
+   boolean result = true;
+   for (int x = 1; x<size()-1; x++) {
+      for (int y = 0; y<size(); y++) {
+        if (compareH(x, y)) {
+         return false;
+        }
+      }
+    }
+    for (int x = 0; x<size(); x++) {
+      for (int y = 1; y<size()-1; y++) {
+        if (compareV(x, y)) {
+          return false;
+        }
+      }
+    }
+   return result;
+  }
+  
+
+  void reshuffle(){
+    if(noMoreLinks()){
+      for (int x = 0; x < size(); x++) {
+      for (int y = 0; y < size(); y++) {
+        board[x][y] = new Candy(randomCandy(), x, y);
+      }
+    }
+    }
+  }
+  
 }
