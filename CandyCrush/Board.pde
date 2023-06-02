@@ -9,7 +9,6 @@ public class Board {
       }
     }
   }
-  git add
   String randomCandy() {
     String[] candies = {"blue", "purple", "orange", "green", "yellow", "red"};
     int index = (int)(random(0,6));

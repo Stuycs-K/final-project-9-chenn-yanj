@@ -14,6 +14,10 @@ void setup() {
   b = new Board(9);
 }
 
+void keyPressed() {
+  if (key == ' ') b = new Board(9);
+}
+
 void mouseClicked(){
   if (click) {
     second = b.getCandy((int)(mouseX/SQUARESIZE), (int)(mouseY/SQUARESIZE));
