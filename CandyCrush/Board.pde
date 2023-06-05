@@ -20,6 +20,7 @@ public class Board {
   }
   
   Candy getCandy(int x, int y) {
+    if (x < 0 || x > size()-1 || y < 0 || y > size()-1) return new Candy("", -1, -1);
     return board[x][y];
   }
   
@@ -102,7 +103,6 @@ public class Board {
         if(verticalLink(one, two) || horizontalLink(one, two)) return true;
       }
     }
-    text("not working",765,50);
     return false;
   }
   
