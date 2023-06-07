@@ -120,13 +120,15 @@ public class Board {
     return (a.getColor().equals(b.getColor()) && a.getColor().equals(c.getColor()));
   }
   
-  void crush() {
+  int crush() {
+    int result = 0;
     for (int x = 1; x<size()-1; x++) {
       for (int y = 0; y<size(); y++) {
         if (compareH(x, y)) {
           board[x-1][y] = new Candy("", -1, -1);
           board[x][y] = new Candy("", -1, -1);
           board[x+1][y] = new Candy("", -1, -1);
+          result++;
         }
       }
     }
@@ -136,9 +138,11 @@ public class Board {
           board[x][y-1] = new Candy("", -1, -1);
           board[x][y] = new Candy("", -1, -1);
           board[x][y+1] = new Candy("", -1, -1);
+          result++;
         }
       }
     }
+    return result;
   }
   
   void pushdown(int x, int y){

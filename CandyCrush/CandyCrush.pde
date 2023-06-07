@@ -16,11 +16,14 @@ PImage homebackground;
 String page = "home";
 int playX, playY;
 int rulesX, rulesY;
+int LEVEL;
+int GOAL;
+int score;
 
 
 void setup() {
   homebackground = loadImage("homebackground.jpg");
-  homebackground.resize(810,810);
+  homebackground.resize(810,830);
   gamebackground = loadImage("background.jpg");
   blue = loadImage("blue.png");
   blue.resize(90,90);
@@ -34,15 +37,45 @@ void setup() {
   yellow.resize(90,90);
   red = loadImage("red.png");
   red.resize(90,90);
-  size(810,810);
+  size(810,830);
   ROWS = 9;
   COLS = 9;
   SQUARESIZE = width/COLS;
   b = new Board(9);
+  LEVEL = 0;
+  GOAL = 0;
+  score = 0;
 }
 
-void keyPressed() {
+void keyPressed() { 
+  if(key == 'g'){
+    page = "game";
+
+  if(key == 'g'){
+    page = "game";
+  }
+ if(key == 'r'){
+    page = "rules";
+  }
   if (key == ' ') b = new Board(9);
+  if (key == 'p') {
+    LEVEL = 1;
+    GOAL = 1000;
+    score = 0;
+    b.crush();
+  }
+  if (key == CODED) {
+    if (keyCode == RIGHT) {
+      LEVEL++;
+      if (LEVEL == 6) LEVEL = 0;
+      score = 0;
+      if (LEVEL == 2) GOAL = 1500;
+      if (LEVEL == 3) GOAL = 15;
+      if (LEVEL == 4) GOAL = 10;
+      if (LEVEL == 5) GOAL = 5;
+    }
+  }
+}
 }
 
 void mouseClicked(){
@@ -51,13 +84,18 @@ void mouseClicked(){
     page = "game";
   }
  }
+ 
  if(page.equals("game")){
   if (click) {
     second = b.getCandy((int)(mouseX/SQUARESIZE), (int)(mouseY/SQUARESIZE));
     b.swap(initial, second);
     click = false;
-    b.crush();
-    b.gravity();
+    //b.crush();
+    //b.gravity();
+    if (LEVEL == 3 || LEVEL == 4 || LEVEL == 5) { // increment moves taken
+      score++;
+      b.crush();
+    }
   }
   else { 
     click = true; 
@@ -93,6 +131,7 @@ void draw() {
  }
  if(page.equals("home")){
   background(homebackground);
+  
   noStroke();
   textSize(35);
   fill(255,92,168);
@@ -105,21 +144,33 @@ void draw() {
   fill(255);
   text("RULES", 365, 536);
   noFill();
-  
-  
-  if(key == 'g'){
-    page = "game";
-  }
-  
  }
  
  if(page.equals("game")){
-   if(key == 'h'){
-    page = "home";
+ 
+
+  
+  displayLog();
+  game();
+  
+  if (LEVEL == 1 || LEVEL == 2) {
+   score += b.crush() * 50;
   }
-  println(frameRate);
-  drawSquares();
-  background(gamebackground);
+  
+  
+  b.gravity();
+ }
+}
+void displayLog(){
+  background(204);
+  textSize(20);
+  text("GOAL: " + GOAL, 0, 825);
+  text("SCORE: " + score, 350, 825);
+  text("LEVEL: " + LEVEL, 700, 825);
+}
+
+void game() {
+  image(gamebackground, 0, 0);
   for (int x = 0; x < b.size(); x++) {
       for (int y = 0; y < b.size(); y++) {
         Candy piece = b.getCandy(x, y);
@@ -146,13 +197,12 @@ void draw() {
   b.crush();
   b.gravity();
 }
-}
 
-void drawSquares() {
-  stroke(0);
-  for (int x = 0; x < width; x+=SQUARESIZE) {
-    for (int y = 0; y < height; y+=SQUARESIZE) {
-      square(x,y,SQUARESIZE);
-    }
-  }
-}
+//void drawSquares() {
+//  stroke(0);
+//  for (int x = 0; x < width; x+=SQUARESIZE) {
+//    for (int y = 0; y < height; y+=SQUARESIZE) {
+//      square(x,y,SQUARESIZE);
+//    }
+//  }
+//}
