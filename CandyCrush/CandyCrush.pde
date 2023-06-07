@@ -5,20 +5,26 @@ boolean click = false;
 Candy initial;
 Candy second;
 Board b;
-PImage background;
+PImage gamebackground;
 PImage blue;
 PImage purple;
 PImage orange;
 PImage green;
 PImage yellow;
 PImage red;
+PImage homebackground;
+String page = "home";
+int playX, playY;
+int rulesX, rulesY;
 int LEVEL;
 int GOAL;
 int score;
 
 
 void setup() {
-  background = loadImage("background.jpg");
+  homebackground = loadImage("homebackground.jpg");
+  homebackground.resize(810,830);
+  gamebackground = loadImage("background.jpg");
   blue = loadImage("blue.png");
   blue.resize(90,90);
   purple = loadImage("purple.png");
@@ -41,7 +47,16 @@ void setup() {
   score = 0;
 }
 
-void keyPressed() {
+void keyPressed() { 
+  if(key == 'g'){
+    page = "game";
+
+  if(key == 'g'){
+    page = "game";
+  }
+ if(key == 'r'){
+    page = "rules";
+  }
   if (key == ' ') b = new Board(9);
   if (key == 'p') {
     LEVEL = 1;
@@ -61,8 +76,16 @@ void keyPressed() {
     }
   }
 }
+}
 
 void mouseClicked(){
+ if(page.equals("home")){
+  if(inShape(mouseX, mouseY, playX, playY)){
+    page = "game";
+  }
+ }
+ 
+ if(page.equals("game")){
   if (click) {
     second = b.getCandy((int)(mouseX/SQUARESIZE), (int)(mouseY/SQUARESIZE));
     b.swap(initial, second);
@@ -83,6 +106,8 @@ void mouseClicked(){
     if (b.validMove(initial, b.getCandy(initial.getX()-1, initial.getY()))) highlight((int)(mouseX/SQUARESIZE) * SQUARESIZE -SQUARESIZE, (int)(mouseY/SQUARESIZE) * SQUARESIZE);
     if (b.validMove(initial, b.getCandy(initial.getX()+1, initial.getY()))) highlight((int)(mouseX/SQUARESIZE) * SQUARESIZE +SQUARESIZE, (int)(mouseY/SQUARESIZE) * SQUARESIZE);
   }
+ }
+ 
 }
 
 void highlight(int x, int y) {
@@ -91,6 +116,51 @@ void highlight(int x, int y) {
   square(x, y, SQUARESIZE);
 }
 
+boolean inShape(int x, int y, int rectlength, int rectheight)  {
+  if (mouseY >= y && mouseY <= y+rectheight && mouseX >= x && mouseX <= x+rectlength 
+      ) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+void draw() {
+ if(page.equals("rules")){
+   background(color(255));
+ }
+ if(page.equals("home")){
+  background(homebackground);
+  
+  noStroke();
+  textSize(35);
+  fill(255,92,168);
+  rect(320, 405, 200, 40);
+  fill(255);
+  text("PLAY", 375, 436);
+  noFill();
+  fill(11,185,248);
+  rect(320, 505, 200, 40);
+  fill(255);
+  text("RULES", 365, 536);
+  noFill();
+ }
+ 
+ if(page.equals("game")){
+ 
+
+  
+  displayLog();
+  game();
+  
+  if (LEVEL == 1 || LEVEL == 2) {
+   score += b.crush() * 50;
+  }
+  
+  
+  b.gravity();
+ }
+}
 void displayLog(){
   background(204);
   textSize(20);
@@ -99,19 +169,8 @@ void displayLog(){
   text("LEVEL: " + LEVEL, 700, 825);
 }
 
-void draw() {
-  displayLog();
-  game();
-  
-  if (LEVEL == 1 || LEVEL == 2) {
-   score += b.crush() * 50;
-  }
-  
-  b.gravity();
-}
-
 void game() {
-  image(background, 0, 0);
+  image(gamebackground, 0, 0);
   for (int x = 0; x < b.size(); x++) {
       for (int y = 0; y < b.size(); y++) {
         Candy piece = b.getCandy(x, y);
@@ -135,6 +194,8 @@ void game() {
         }
       }
   }
+  b.crush();
+  b.gravity();
 }
 
 //void drawSquares() {
