@@ -41,6 +41,9 @@ changed horizontal/vertical method to only check for the three combinations of l
 added a movedown method + gravity method -> shifts candy down
 adjusted draw + mouseClicked in CandyCrush
 
+### June 1st, 2023
+changed background
+
 
 ## NIKI
 
@@ -63,3 +66,9 @@ started crush() to remove completed links on board
 ### May 30th, 2023
 wrote crush() to remove links when board is first generated and when user makes a swap
 compareH() and compareV() helper methods to compare the candies around a coordinate
+
+### May 31st, 2023
+fixed pushdown(), setY cor from y+1 to y
+
+### June 1st, 2023
+reshuffle for user if there are no more valid moves
