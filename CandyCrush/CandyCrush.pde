@@ -5,11 +5,29 @@ boolean click = false;
 Candy initial;
 Candy second;
 Board b;
-PImage img;
+PImage background;
+PImage blue;
+PImage purple;
+PImage orange;
+PImage green;
+PImage yellow;
+PImage red;
+
 
 void setup() {
-  img = loadImage("background.jpg");
-  background(img);
+  background = loadImage("background.jpg");
+  blue = loadImage("blue.png");
+  blue.resize(90,90);
+  purple = loadImage("purple.png");
+  purple.resize(90,90);
+  orange = loadImage("orange.png");
+  orange.resize(90,90);
+  green = loadImage("green.png");
+  green.resize(90,90);
+  yellow = loadImage("yellow.png");
+  yellow.resize(90,90);
+  red = loadImage("red.png");
+  red.resize(90,90);
   size(810,810);
   ROWS = 9;
   COLS = 9;
@@ -37,28 +55,29 @@ void mouseClicked(){
 }
 
 void draw() {
+  println(frameRate);
   drawSquares();
-  background(img);
+  background(background);
   for (int x = 0; x < b.size(); x++) {
       for (int y = 0; y < b.size(); y++) {
         Candy piece = b.getCandy(x, y);
         if (piece.getColor().equals("blue")) {
-          image(loadImage("blue.png"), x*SQUARESIZE, y*SQUARESIZE, 90, 90);
+          image(blue, x*SQUARESIZE, y*SQUARESIZE);
         }
         if (piece.getColor().equals("purple")) {
-          image(loadImage("purple.png"), x*SQUARESIZE, y*SQUARESIZE, 90, 90);
+           image(purple, x*SQUARESIZE, y*SQUARESIZE);
         }
         if (piece.getColor().equals("orange")) {
-          image(loadImage("orange.png"), x*SQUARESIZE, y*SQUARESIZE, 90, 90);
+           image(orange, x*SQUARESIZE, y*SQUARESIZE);
         }
         if (piece.getColor().equals("green")) {
-          image(loadImage("green.png"), x*SQUARESIZE, y*SQUARESIZE, 90, 90);
+            image(green, x*SQUARESIZE, y*SQUARESIZE);
         }
         if (piece.getColor().equals("yellow")) {
-          image(loadImage("yellow.png"), x*SQUARESIZE, y*SQUARESIZE, 90, 90);
+            image(yellow, x*SQUARESIZE, y*SQUARESIZE);
         }
         if (piece.getColor().equals("red")) {
-          image(loadImage("red.png"), x*SQUARESIZE, y*SQUARESIZE, 90, 90);
+           image(red, x*SQUARESIZE, y*SQUARESIZE);
         }
       }
   }
