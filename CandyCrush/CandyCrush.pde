@@ -12,6 +12,9 @@ PImage orange;
 PImage green;
 PImage yellow;
 PImage red;
+int LEVEL;
+int GOAL;
+int score;
 
 
 void setup() {
@@ -28,25 +31,48 @@ void setup() {
   yellow.resize(90,90);
   red = loadImage("red.png");
   red.resize(90,90);
-  size(810,810);
+  size(810,830);
   ROWS = 9;
   COLS = 9;
   SQUARESIZE = width/COLS;
   b = new Board(9);
+  LEVEL = 0;
+  GOAL = 0;
+  score = 0;
 }
 
 void keyPressed() {
   if (key == ' ') b = new Board(9);
+  if (key == 'p') {
+    LEVEL = 1;
+    GOAL = 1000;
+    score = 0;
+    b.crush();
+  }
+  if (key == CODED) {
+    if (keyCode == RIGHT) {
+      LEVEL++;
+      if (LEVEL == 6) LEVEL = 0;
+      score = 0;
+      if (LEVEL == 2) GOAL = 1500;
+      if (LEVEL == 3) GOAL = 15;
+      if (LEVEL == 4) GOAL = 10;
+      if (LEVEL == 5) GOAL = 5;
+    }
+  }
 }
 
 void mouseClicked(){
-
   if (click) {
     second = b.getCandy((int)(mouseX/SQUARESIZE), (int)(mouseY/SQUARESIZE));
     b.swap(initial, second);
     click = false;
-    b.crush();
-    b.gravity();
+    //b.crush();
+    //b.gravity();
+    if (LEVEL == 3 || LEVEL == 4 || LEVEL == 5) { // increment moves taken
+      score++;
+      b.crush();
+    }
   }
   else { 
     click = true; 
@@ -65,10 +91,27 @@ void highlight(int x, int y) {
   square(x, y, SQUARESIZE);
 }
 
+void displayLog(){
+  background(204);
+  textSize(20);
+  text("GOAL: " + GOAL, 0, 825);
+  text("SCORE: " + score, 350, 825);
+  text("LEVEL: " + LEVEL, 700, 825);
+}
+
 void draw() {
-  println(frameRate);
-  drawSquares();
-  background(background);
+  displayLog();
+  game();
+  
+  if (LEVEL == 1 || LEVEL == 2) {
+   score += b.crush() * 50;
+  }
+  
+  b.gravity();
+}
+
+void game() {
+  image(background, 0, 0);
   for (int x = 0; x < b.size(); x++) {
       for (int y = 0; y < b.size(); y++) {
         Candy piece = b.getCandy(x, y);
@@ -92,16 +135,13 @@ void draw() {
         }
       }
   }
-  b.crush();
-  b.gravity();
- 
 }
 
-void drawSquares() {
-  stroke(0);
-  for (int x = 0; x < width; x+=SQUARESIZE) {
-    for (int y = 0; y < height; y+=SQUARESIZE) {
-      square(x,y,SQUARESIZE);
-    }
-  }
-}
+//void drawSquares() {
+//  stroke(0);
+//  for (int x = 0; x < width; x+=SQUARESIZE) {
+//    for (int y = 0; y < height; y+=SQUARESIZE) {
+//      square(x,y,SQUARESIZE);
+//    }
+//  }
+//}
