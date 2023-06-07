@@ -48,22 +48,20 @@ void setup() {
 }
 
 void keyPressed() { 
+  if(key == 'h'){
+    page = "home";
+  }
   if(key == 'g'){
     page = "game";
-
-  if(key == 'g'){
-    page = "game";
-  }
- if(key == 'r'){
-    page = "rules";
-  }
-  if (key == ' ') b = new Board(9);
-  if (key == 'p') {
     LEVEL = 1;
     GOAL = 1000;
     score = 0;
     b.crush();
   }
+ if(key == 'r'){
+    page = "rules";
+  }
+  if (key == ' ') b = new Board(9);
   if (key == CODED) {
     if (keyCode == RIGHT) {
       LEVEL++;
@@ -73,15 +71,21 @@ void keyPressed() {
       if (LEVEL == 3) GOAL = 15;
       if (LEVEL == 4) GOAL = 10;
       if (LEVEL == 5) GOAL = 5;
+      b = new Board(9);
+      b.crush();
+      b.gravity();
     }
   }
-}
 }
 
 void mouseClicked(){
  if(page.equals("home")){
   if(inShape(mouseX, mouseY, playX, playY)){
     page = "game";
+    LEVEL = 1;
+    GOAL = 1000;
+    score = 0;
+    b.crush();
   }
  }
  
@@ -147,17 +151,12 @@ void draw() {
  }
  
  if(page.equals("game")){
- 
-
-  
   displayLog();
   game();
-  
   if (LEVEL == 1 || LEVEL == 2) {
    score += b.crush() * 50;
   }
-  
-  
+  else b.crush();
   b.gravity();
  }
 }
@@ -194,8 +193,6 @@ void game() {
         }
       }
   }
-  b.crush();
-  b.gravity();
 }
 
 //void drawSquares() {
