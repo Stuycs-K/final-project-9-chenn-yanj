@@ -44,6 +44,11 @@ adjusted draw + mouseClicked in CandyCrush
 ### June 1st, 2023
 changed background
 
+### June 6th, 2023
+updated CandyCrush so pictures are not generated in draw() everytime
+made homepage
+made rules page
+updated keys to shift between pages
 
 ## NIKI
 
