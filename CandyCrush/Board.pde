@@ -49,43 +49,93 @@ public class Board {
    }
    
   
-  boolean horizontalLink(Candy one, Candy two){
+  int horizontalLink(Candy one, Candy two){
     // check to see if new position makes a vertical link
-    // made for links of 3
      int x2 = two.getX();
      int y2 = two.getY();
+     
+     if (canMove(x2-3,y2,one) &&
+         canMove(x2-2,y2,one) &&
+         canMove(x2-1,y2,one) &&
+         board[x2-3][y2] != one && 
+         board[x2-2][y2] != one &&
+         board[x2-1][y2] != one) return 4;
+     if (canMove(x2-2,y2,one) &&
+         canMove(x2-1,y2,one) &&
+         canMove(x2+1,y2,one) &&
+         board[x2-2][y2] != one && 
+         board[x2-1][y2] != one &&
+         board[x2+1][y2] != one) return 4;
+     if (canMove(x2-1,y2,one) &&
+         canMove(x2+1,y2,one) &&
+         canMove(x2+2,y2,one) &&
+         board[x2-1][y2] != one && 
+         board[x2+1][y2] != one &&
+         board[x2+2][y2] != one) return 4;
+     if (canMove(x2+3,y2,one) &&
+         canMove(x2+2,y2,one) &&
+         canMove(x2+1,y2,one) &&
+         board[x2+3][y2] != one && 
+         board[x2+2][y2] != one &&
+         board[x2+1][y2] != one) return 4;
+     
      if( canMove(x2-1,y2,one) &&
           canMove(x2+1,y2,one) && 
           board[x2-1][y2] != one && 
-          board[x2+1][y2] != one) return true;
+          board[x2+1][y2] != one) return 3;
      if(  canMove(x2-1,y2,one) &&
           canMove(x2-2,y2,one) &&
           board[x2-1][y2] != one && 
-          board[x2-2][y2] != one) return true;
+          board[x2-2][y2] != one) return 3;
      if(  canMove(x2+1,y2,one) &&
           canMove(x2+2,y2,one) &&
           board[x2+1][y2] != one && 
-          board[x2+2][y2] != one) return true;
-     else return false;
+          board[x2+2][y2] != one) return 3;
+     return 0;
   }
   
-  boolean verticalLink(Candy one, Candy two){
-     // made for links of 3
+  int verticalLink(Candy one, Candy two){
      int x2 = two.getX();
      int y2 = two.getY();
+     
+     if (canMove(x2,y2-3,one) &&
+         canMove(x2,y2-2,one) &&
+         canMove(x2,y2-1,one) &&
+         board[x2][y2-3] != one && 
+         board[x2][y2-2] != one &&
+         board[x2][y2-1] != one) return 4;
+     if (canMove(x2,y2-2,one) &&
+         canMove(x2,y2-1,one) &&
+         canMove(x2,y2+1,one) &&
+         board[x2][y2-2] != one && 
+         board[x2][y2-1] != one &&
+         board[x2][y2+1] != one) return 4;
+     if (canMove(x2,y2-1,one) &&
+         canMove(x2,y2+1,one) &&
+         canMove(x2,y2+2,one) &&
+         board[x2][y2-1] != one && 
+         board[x2][y2+1] != one &&
+         board[x2][y2+2] != one) return 4;
+     if (canMove(x2,y2+3,one) &&
+         canMove(x2,y2+2,one) &&
+         canMove(x2,y2+1,one) &&
+         board[x2][y2+3] != one && 
+         board[x2][y2+2] != one &&
+         board[x2][y2+1] != one) return 4;
+     
      if( canMove(x2,y2-1,one) &&
           canMove(x2,y2+1,one) &&
           board[x2][y2-1] != one && 
-          board[x2][y2+1] != one) return true;
+          board[x2][y2+1] != one) return 3;
      if( canMove(x2,y2-1,one)&&
           canMove(x2,y2-2,one) &&
           board[x2][y2-1] != one && 
-          board[x2][y2-2] != one) return true;
+          board[x2][y2-2] != one) return 3;
      if( canMove(x2,y2+1,one) &&
           canMove(x2,y2+2,one) &&
           board[x2][y2+1] != one && 
-          board[x2][y2+2] != one) return true;
-     else return false;
+          board[x2][y2+2] != one) return 3;
+     return 0;
   }
   
   boolean validMove(Candy one, Candy two) {
@@ -95,25 +145,41 @@ public class Board {
     int y2 = two.getY();
     if ( x1 - 1 == x2 || x1 + 1 == x2 ) {
       if (y1 == y2 ){
-        if(verticalLink(one, two) || horizontalLink(one, two)) return true;
+        if(verticalLink(one, two)!=0 || horizontalLink(one, two)!=0) return true;
       }
     }
     if ( y1 - 1 == y2 || y1 + 1 == y2 ) {
       if (x1 == x2){
-        if(verticalLink(one, two) || horizontalLink(one, two)) return true;
+        if(verticalLink(one, two)!=0 || horizontalLink(one, two)!=0) return true;
       }
     }
     return false;
   }
   
-  boolean compareH(int x, int y) {
+  boolean compareH4(int x, int y) {
+    Candy a = getCandy(x, y);
+    Candy b = getCandy(x+1, y);
+    Candy c = getCandy(x+2, y);
+    Candy d = getCandy(x+3, y);
+    return (a.getColor().equals(b.getColor()) && a.getColor().equals(c.getColor()) && a.getColor().equals(d.getColor()));
+  }
+  
+  boolean compareV4(int x, int y) {
+    Candy a = getCandy(x, y);
+    Candy b = getCandy(x, y+1);
+    Candy c = getCandy(x, y+2);
+    Candy d = getCandy(x, y+3);
+    return (a.getColor().equals(b.getColor()) && a.getColor().equals(c.getColor()) && a.getColor().equals(d.getColor()));
+  }
+  
+  boolean compareH3(int x, int y) {
     Candy a = getCandy(x-1, y);
     Candy b = getCandy(x, y);
     Candy c = getCandy(x+1, y);
     return (a.getColor().equals(b.getColor()) && a.getColor().equals(c.getColor()));
   }
   
-  boolean compareV(int x, int y) {
+  boolean compareV3(int x, int y) {
     Candy a = getCandy(x, y-1);
     Candy b = getCandy(x, y);
     Candy c = getCandy(x, y+1);
@@ -122,9 +188,26 @@ public class Board {
   
   int crush() {
     int result = 0;
+    
+    for(int x = 0; x<size()-3; x++) {
+      for(int y = 0; y<size(); y++) {
+        if (compareH4(x, y)) {
+          board[x][y] = new Candy(board[x+1][y].getColor(), "striped", x, y);
+          board[x+1][y] = new Candy();
+        }
+      }
+    }
+    for(int x = 0; x<size(); x++) {
+      for(int y = 0; y<size()-3; y++) {
+        if (compareV4(x, y)) {
+        
+        }
+      }
+    }
+    
     for (int x = 1; x<size()-1; x++) {
       for (int y = 0; y<size(); y++) {
-        if (compareH(x, y)) {
+        if (compareH3(x, y)) {
           board[x-1][y] = new Candy("", -1, -1);
           board[x][y] = new Candy("", -1, -1);
           board[x+1][y] = new Candy("", -1, -1);
@@ -134,7 +217,7 @@ public class Board {
     }
     for (int x = 0; x<size(); x++) {
       for (int y = 1; y<size()-1; y++) {
-        if (compareV(x, y)) {
+        if (compareV3(x, y)) {
           board[x][y-1] = new Candy("", -1, -1);
           board[x][y] = new Candy("", -1, -1);
           board[x][y+1] = new Candy("", -1, -1);
@@ -149,14 +232,14 @@ public class Board {
     boolean result = false;
     for (int x = 1; x<size()-1; x++) {
       for (int y = 0; y<size(); y++) {
-        if (compareH(x, y)) {
+        if (compareH3(x, y)) {
           result = true;
         }
       }
     }
     for (int x = 0; x<size(); x++) {
       for (int y = 1; y<size()-1; y++) {
-        if (compareV(x, y)) {
+        if (compareV3(x, y)!) {
           result = true;
         }
       }

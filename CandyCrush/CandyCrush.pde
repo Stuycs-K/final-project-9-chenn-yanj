@@ -190,6 +190,7 @@ void draw() {
   }
   else b.crush();
   b.gravity();
+  
   if (swapped) game();
  }
 }
