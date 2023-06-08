@@ -87,9 +87,10 @@ void mouseClicked(){
     score = 0;
     b.crush();
   }
-   if(inShape(320, 505, rulesX, rulesY)){
+   else if(inShape(320, 505, rulesX, rulesY)){
      page = "rules";
    }
+ }
  
  if(page.equals("game")){
   if (click) {
@@ -113,8 +114,6 @@ void mouseClicked(){
     if (b.validMove(initial, b.getCandy(initial.getX()+1, initial.getY()))) highlight((int)(mouseX/SQUARESIZE) * SQUARESIZE +SQUARESIZE, (int)(mouseY/SQUARESIZE) * SQUARESIZE);
   }
  }
- 
-}
 }
 
 void highlight(int x, int y) {
