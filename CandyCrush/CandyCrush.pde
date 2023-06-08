@@ -30,8 +30,10 @@ String page = "home";
 int playX, playY;
 int rulesX, rulesY;
 int LEVEL;
-int GOAL;
+int points;
+int moves;
 int score;
+int m;
 
 
 void setup() {
@@ -82,8 +84,10 @@ void setup() {
   SQUARESIZE = width/COLS;
   b = new Board(9);
   LEVEL = 0;
-  GOAL = 0;
+  points = 0;
+  moves = 0;
   score = 0;
+  m = 0;
   playX = 200;
   playY = 40;
   rulesX = 200;
@@ -120,8 +124,10 @@ void keyPressed() {
   if(key == 'g'){
     page = "game";
     LEVEL = 1;
-    GOAL = 1000;
+    points = 10000;
+    moves = 15;
     score = 0;
+    m = 0;
     displayLog();
     b.crush();
     game();
@@ -134,12 +140,25 @@ void keyPressed() {
   if (key == CODED) {
     if (keyCode == RIGHT) {
       LEVEL++;
-      if (LEVEL == 6) LEVEL = 0;
+      if (LEVEL == 6) LEVEL = 1;
       score = 0;
-      if (LEVEL == 2) GOAL = 1500;
-      if (LEVEL == 3) GOAL = 15;
-      if (LEVEL == 4) GOAL = 10;
-      if (LEVEL == 5) GOAL = 5;
+      m = 0;
+      if (LEVEL == 2) {
+        points = 15000;
+        moves = 10;
+      }
+      if (LEVEL == 3) {
+        points = 20000;
+        moves = 10;
+      }
+      if (LEVEL == 4) {
+        points = 20000;
+        moves = 8;
+      }
+      if (LEVEL == 5) {
+        points = 20000;
+        moves = 5;
+      }
       b = new Board(9);
       displayLog();
       b.crush();
@@ -154,8 +173,10 @@ void mouseClicked(){
   if(inShape(320, 405, playX, playY)){
     page = "game";
     LEVEL = 1;
-    GOAL = 1000;
+    points = 10000;
+    moves = 15;
     score = 0;
+    m = 0;
     displayLog();
     game();
     b.crush();
@@ -171,15 +192,10 @@ void mouseClicked(){
     second = b.getCandy((int)(mouseX/SQUARESIZE), (int)(mouseY/SQUARESIZE));
     b.swap(initial, second);
     click = false;
-    if (LEVEL == 1 || LEVEL == 2) { // add points
-      score += b.crush() * 50;
-    }
-    else b.crush();
+     score += b.crush() * 50;
     //b.gravity();
-    if (LEVEL == 3 || LEVEL == 4 || LEVEL == 5) { // increment moves taken
-      score++;
+      m++;
       b.crush();
-    }
     displayLog();
     game();
   }
@@ -236,10 +252,7 @@ void draw() {
    boolean swapped = b.isMove();
  // displayLog();
   //game();
-  if (LEVEL == 1 || LEVEL == 2) {
-    score += b.crush() * 50;
-  }
-  else b.crush();
+  score += b.crush() * 50;
   b.gravity();
   
   if (swapped) game();
@@ -248,8 +261,10 @@ void draw() {
 void displayLog(){
   background(204);
   textSize(20);
-  text("GOAL: " + GOAL, 0, 825);
+  text("GOAL: " + points, 0, 825);
+  text("MOVES: " + moves, 200, 825);
   text("SCORE: " + score, 350, 825);
+  text("SWAPS: " + m, 500, 825);
   text("LEVEL: " + LEVEL, 700, 825);
 }
 
@@ -276,8 +291,44 @@ void game() {
         if (piece.getColor().equals("red")) {
            image(red, x*SQUARESIZE, y*SQUARESIZE);
         }
-         if (piece.getColor().equals("liquorice")) {
+        if (piece.getColor().equals("liquorice")) {
           image(liquorice, x*SQUARESIZE, y*SQUARESIZE);
+        }
+        if (piece.getColor().equals("blueV")) {
+          image(blueV, x*SQUARESIZE, y*SQUARESIZE);
+        }
+        if (piece.getColor().equals("blueH")) {
+          image(blueH, x*SQUARESIZE, y*SQUARESIZE);
+        }
+        if (piece.getColor().equals("purpleV")) {
+          image(purpleV, x*SQUARESIZE, y*SQUARESIZE);
+        }
+        if (piece.getColor().equals("purpleH")) {
+          image(purpleH, x*SQUARESIZE, y*SQUARESIZE);
+        }
+        if (piece.getColor().equals("orangeV")) {
+          image(orangeV, x*SQUARESIZE, y*SQUARESIZE);
+        }
+        if (piece.getColor().equals("orangeH")) {
+          image(orangeH, x*SQUARESIZE, y*SQUARESIZE);
+        }
+        if (piece.getColor().equals("greenV")) {
+          image(greenV, x*SQUARESIZE, y*SQUARESIZE);
+        }
+        if (piece.getColor().equals("greenH")) {
+          image(greenH, x*SQUARESIZE, y*SQUARESIZE);
+        }
+        if (piece.getColor().equals("yellowV")) {
+          image(yellowV, x*SQUARESIZE, y*SQUARESIZE);
+        }
+        if (piece.getColor().equals("yellowH")) {
+          image(yellowH, x*SQUARESIZE, y*SQUARESIZE);
+        }
+        if (piece.getColor().equals("redV")) {
+          image(redV, x*SQUARESIZE, y*SQUARESIZE);
+        }
+        if (piece.getColor().equals("redH")) {
+          image(redH, x*SQUARESIZE, y*SQUARESIZE);
         }
       }
   }
