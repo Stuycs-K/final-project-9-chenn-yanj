@@ -45,6 +45,25 @@ void setup() {
   LEVEL = 0;
   GOAL = 0;
   score = 0;
+  playX = 200;
+  playY = 40;
+  rulesX = 200;
+  rulesY = 40;
+  
+  // HOME
+  background(homebackground);
+  noStroke();
+  textSize(35);
+  fill(255,92,168);
+  rect(320, 405, playX, playY);
+  fill(255);
+  text("PLAY", 375, 436);
+  noFill();
+  fill(11,185,248);
+  rect(320, 505, rulesX, rulesY);
+  fill(255);
+  text("RULES", 365, 536);
+  noFill();
 }
 
 void keyPressed() { 
@@ -72,6 +91,8 @@ void keyPressed() {
       if (LEVEL == 4) GOAL = 10;
       if (LEVEL == 5) GOAL = 5;
       b = new Board(9);
+      displayLog();
+      game();
       b.crush();
       b.gravity();
     }
@@ -85,10 +106,13 @@ void mouseClicked(){
     LEVEL = 1;
     GOAL = 1000;
     score = 0;
+    displayLog();
+    game();
     b.crush();
   }
    else if(inShape(320, 505, rulesX, rulesY)){
      page = "rules";
+     background(color(255));
    }
  }
  
@@ -97,12 +121,17 @@ void mouseClicked(){
     second = b.getCandy((int)(mouseX/SQUARESIZE), (int)(mouseY/SQUARESIZE));
     b.swap(initial, second);
     click = false;
-    //b.crush();
-    //b.gravity();
+    if (LEVEL == 1 || LEVEL == 2) { // add points
+      score += b.crush() * 50;
+    }
+    else b.crush();
+    b.gravity();
     if (LEVEL == 3 || LEVEL == 4 || LEVEL == 5) { // increment moves taken
       score++;
       b.crush();
     }
+    displayLog();
+    game();
   }
   else { 
     click = true; 
@@ -133,38 +162,35 @@ boolean inShape(int x, int y, int rectlength, int rectheight)  {
 
 void draw() {
  println(frameRate);
- if(page.equals("rules")){
-   background(color(255));
- }
- if(page.equals("home")){
-  background(homebackground);
-  
-  noStroke();
-  textSize(35);
-  fill(255,92,168);
-  playX = 200;
-  playY = 40;
-  rect(320, 405, playX, playY);
-  fill(255);
-  text("PLAY", 375, 436);
-  noFill();
-  fill(11,185,248);
-  rulesX = 200;
-  rulesY = 40;
-  rect(320, 505, rulesX, rulesY);
-  fill(255);
-  text("RULES", 365, 536);
-  noFill();
- }
+ //if(page.equals("rules")){
+ //  background(color(255));
+ //}
+ //if(page.equals("home")){
+ // background(homebackground);
+ // noStroke();
+ // textSize(35);
+ // fill(255,92,168);
+ // rect(320, 405, playX, playY);
+ // fill(255);
+ // text("PLAY", 375, 436);
+ // noFill();
+ // fill(11,185,248);
+ // rect(320, 505, rulesX, rulesY);
+ // fill(255);
+ // text("RULES", 365, 536);
+ // noFill();
+ //}
  
  if(page.equals("game")){
-  displayLog();
-  game();
+   boolean swapped = b.isMove();
+ // displayLog();
+  //game();
   if (LEVEL == 1 || LEVEL == 2) {
-   score += b.crush() * 50;
+    score += b.crush() * 50;
   }
   else b.crush();
   b.gravity();
+  if (swapped) game();
  }
 }
 void displayLog(){
