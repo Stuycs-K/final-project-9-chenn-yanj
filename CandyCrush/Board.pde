@@ -145,6 +145,25 @@ public class Board {
     return result;
   }
   
+  boolean isMove() {
+    boolean result = false;
+    for (int x = 1; x<size()-1; x++) {
+      for (int y = 0; y<size(); y++) {
+        if (compareH(x, y)) {
+          result = true;
+        }
+      }
+    }
+    for (int x = 0; x<size(); x++) {
+      for (int y = 1; y<size()-1; y++) {
+        if (compareV(x, y)) {
+          result = true;
+        }
+      }
+    }
+    return result;
+  }
+  
   void pushdown(int x, int y){
     if(y == 0 && board[x][y].getColor().equals("")){
       board[x][y] = new Candy(randomCandy(), x, y);
