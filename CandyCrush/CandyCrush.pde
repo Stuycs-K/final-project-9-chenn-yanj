@@ -80,14 +80,16 @@ void keyPressed() {
 
 void mouseClicked(){
  if(page.equals("home")){
-  if(inShape(mouseX, mouseY, playX, playY)){
+  if(inShape(320, 405, playX, playY)){
     page = "game";
     LEVEL = 1;
     GOAL = 1000;
     score = 0;
     b.crush();
   }
- }
+   if(inShape(320, 505, rulesX, rulesY)){
+     page = "rules";
+   }
  
  if(page.equals("game")){
   if (click) {
@@ -113,6 +115,7 @@ void mouseClicked(){
  }
  
 }
+}
 
 void highlight(int x, int y) {
   stroke(255, 255, 255);
@@ -130,6 +133,7 @@ boolean inShape(int x, int y, int rectlength, int rectheight)  {
 }
 
 void draw() {
+ println(frameRate);
  if(page.equals("rules")){
    background(color(255));
  }
@@ -139,12 +143,16 @@ void draw() {
   noStroke();
   textSize(35);
   fill(255,92,168);
-  rect(320, 405, 200, 40);
+  playX = 200;
+  playY = 40;
+  rect(320, 405, playX, playY);
   fill(255);
   text("PLAY", 375, 436);
   noFill();
   fill(11,185,248);
-  rect(320, 505, 200, 40);
+  rulesX = 200;
+  rulesY = 40;
+  rect(320, 505, rulesX, rulesY);
   fill(255);
   text("RULES", 365, 536);
   noFill();
