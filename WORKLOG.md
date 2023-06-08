@@ -50,6 +50,11 @@ made homepage
 made rules page
 updated keys to shift between pages
 
+###June 8th, 2023
+uploaded striped pictures
+added code for liquorice in later levels
+started gameOver  
+
 ## NIKI
 
 ### May 22nd, 2023
@@ -77,3 +82,8 @@ fixed pushdown(), setY cor from y+1 to y
 
 ### June 1st, 2023
 reshuffle for user if there are no more valid moves
+
+### June 8th, 2023
+fixed flickering highlight by moving methods out of draw
+started 4-candy link methods
+created separate categories for game log
