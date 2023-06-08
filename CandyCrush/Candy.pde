@@ -5,6 +5,8 @@ public class Candy{
   
   public Candy(){
     colors = "";
+    x = -1;
+    y = -1;
   } 
   public Candy(String c, int xCor, int yCor){
     this.colors = c;
