@@ -5,22 +5,29 @@ public class Board {
     board = new Candy[size][size];
     for (int x = 0; x < size; x++) {
       for (int y = 0; y < size; y++) {
-        board[x][y] = new Candy(randomCandy(), x, y);
+        board[x][y] = new Candy(randomCandy(LEVEL), x, y);
       }
     }
   }
-  String randomCandy() {
-    String[] candies = {"blue", "purple", "orange", "green", "yellow", "red"};
-    int index = (int)(random(0,6));
+  String randomCandy(int LEVEL) {
+    int index = 0;
+    String[] candies = {"blue", "purple", "orange", "green", "yellow", "red", "liquorice"};
+    if( LEVEL < 4) {
+       index = (int)(random(0,6));
+    }
+    else{
+        index = (int)(random(0,7));
+    }
     return (candies[index]);
   }
+
   
   int size() {
     return board.length;
   }
   
   Candy getCandy(int x, int y) {
-    if (x < 0 || x > size()-1 || y < 0 || y > size()-1) return new Candy("", -1, -1);
+    if (x < 0 || x > size()-1 || y < 0 || y > size()-1) return new Candy();
     return board[x][y];
   }
   
@@ -40,13 +47,15 @@ public class Board {
   }
   
    boolean canMove(int i, int x, Candy piece){
+     if(piece.getColor().equals("liquorice")) return false;
        if(i >= 0 && i<=board.length-1 && x>=0 && x<=board[0].length-1){
-         if((board[i][x].getColor()).equals(piece.getColor())){
+         if((board[i][x].getColor()).contains(piece.getColor()) || piece.getColor().contains(board[i][x].getColor())){
            return true;    
          }
      }
      return false;
    }
+
    
   
   int horizontalLink(Candy one, Candy two){
@@ -139,6 +148,7 @@ public class Board {
   }
   
   boolean validMove(Candy one, Candy two) {
+    if(one.getColor().equals("liquorice") || two.getColor().equals("liquorice")) return false;
     int x1 = one.getX();
     int y1 = one.getY();
     int x2 = two.getX();
@@ -161,7 +171,7 @@ public class Board {
     Candy b = getCandy(x+1, y);
     Candy c = getCandy(x+2, y);
     Candy d = getCandy(x+3, y);
-    return (a.getColor().equals(b.getColor()) && a.getColor().equals(c.getColor()) && a.getColor().equals(d.getColor()));
+    return (a.getColor().contains(b.getColor()) && a.getColor().contains(c.getColor()) && a.getColor().contains(d.getColor()));
   }
   
   boolean compareV4(int x, int y) {
@@ -169,21 +179,21 @@ public class Board {
     Candy b = getCandy(x, y+1);
     Candy c = getCandy(x, y+2);
     Candy d = getCandy(x, y+3);
-    return (a.getColor().equals(b.getColor()) && a.getColor().equals(c.getColor()) && a.getColor().equals(d.getColor()));
+    return (a.getColor().contains(b.getColor()) && a.getColor().contains(c.getColor()) && a.getColor().contains(d.getColor()));
   }
   
   boolean compareH3(int x, int y) {
     Candy a = getCandy(x-1, y);
     Candy b = getCandy(x, y);
     Candy c = getCandy(x+1, y);
-    return (a.getColor().equals(b.getColor()) && a.getColor().equals(c.getColor()));
+    return (a.getColor().contains(b.getColor()) && a.getColor().contains(c.getColor()));
   }
   
   boolean compareV3(int x, int y) {
     Candy a = getCandy(x, y-1);
     Candy b = getCandy(x, y);
     Candy c = getCandy(x, y+1);
-    return (a.getColor().equals(b.getColor()) && a.getColor().equals(c.getColor()));
+    return (a.getColor().contains(b.getColor()) && a.getColor().contains(c.getColor()));
   }
   
   int crush() {
@@ -192,15 +202,20 @@ public class Board {
     for(int x = 0; x<size()-3; x++) {
       for(int y = 0; y<size(); y++) {
         if (compareH4(x, y)) {
-          board[x][y] = new Candy(board[x+1][y].getColor(), "striped", x, y);
+          board[x][y] = new Candy(board[x+1][y].getColor()+"H", x, y);
           board[x+1][y] = new Candy();
+          board[x+2][y] = new Candy();
+          board[x+3][y] = new Candy();
         }
       }
     }
     for(int x = 0; x<size(); x++) {
       for(int y = 0; y<size()-3; y++) {
         if (compareV4(x, y)) {
-        
+          board[x][y] = new Candy(board[x][y+1].getColor()+"V", x, y);
+          board[x][y+1] = new Candy();
+          board[x][y+2] = new Candy();
+          board[x][y+3] = new Candy();
         }
       }
     }
@@ -208,9 +223,9 @@ public class Board {
     for (int x = 1; x<size()-1; x++) {
       for (int y = 0; y<size(); y++) {
         if (compareH3(x, y)) {
-          board[x-1][y] = new Candy("", -1, -1);
-          board[x][y] = new Candy("", -1, -1);
-          board[x+1][y] = new Candy("", -1, -1);
+          board[x-1][y] = new Candy();
+          board[x][y] = new Candy();
+          board[x+1][y] = new Candy();
           result++;
         }
       }
@@ -218,9 +233,9 @@ public class Board {
     for (int x = 0; x<size(); x++) {
       for (int y = 1; y<size()-1; y++) {
         if (compareV3(x, y)) {
-          board[x][y-1] = new Candy("", -1, -1);
-          board[x][y] = new Candy("", -1, -1);
-          board[x][y+1] = new Candy("", -1, -1);
+          board[x][y-1] = new Candy();
+          board[x][y] = new Candy();
+          board[x][y+1] = new Candy();
           result++;
         }
       }
@@ -239,7 +254,7 @@ public class Board {
     }
     for (int x = 0; x<size(); x++) {
       for (int y = 1; y<size()-1; y++) {
-        if (compareV3(x, y)!) {
+        if (compareV3(x, y)) {
           result = true;
         }
       }
@@ -249,12 +264,12 @@ public class Board {
   
   void pushdown(int x, int y){
     if(y == 0 && board[x][y].getColor().equals("")){
-      board[x][y] = new Candy(randomCandy(), x, y);
+      board[x][y] = new Candy(randomCandy(LEVEL), x, y);
     }
     else if(board[x][y].getColor().equals("")){
       board[x][y] = board[x][y-1];
       board[x][y].setY(y);
-      board[x][y-1] = new Candy("", -1, -1);
+      board[x][y-1] = new Candy();
       pushdown(x, y-1); 
     }
   }

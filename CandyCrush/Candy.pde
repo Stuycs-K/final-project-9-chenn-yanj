@@ -1,6 +1,5 @@
 public class Candy{
   String colors;
-  String type;
   int x;
   int y;
   
@@ -11,12 +10,6 @@ public class Candy{
   } 
   public Candy(String c, int xCor, int yCor){
     this.colors = c;
-    x = xCor;
-    y = yCor;
-  }
-  public Candy(String c, String t, int xCor, int yCor) {
-    colors = c;
-    type = t;
     x = xCor;
     y = yCor;
   }
