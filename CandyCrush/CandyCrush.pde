@@ -7,12 +7,25 @@ Candy second;
 Board b;
 PImage gamebackground;
 PImage blue;
+PImage blueV;
+PImage blueH;
 PImage purple;
+PImage purpleV;
+PImage purpleH;
 PImage orange;
+PImage orangeV;
+PImage orangeH;
 PImage green;
+PImage greenV;
+PImage greenH;
 PImage yellow;
+PImage yellowV;
+PImage yellowH;
 PImage red;
+PImage redV;
+PImage redH;
 PImage homebackground;
+PImage liquorice;
 String page = "home";
 int playX, playY;
 int rulesX, rulesY;
@@ -25,18 +38,44 @@ void setup() {
   homebackground = loadImage("homebackground.jpg");
   homebackground.resize(810,830);
   gamebackground = loadImage("background.jpg");
+  liquorice = loadImage("liquorice.png");
+  liquorice.resize(90,90);
   blue = loadImage("blue.png");
   blue.resize(90,90);
+  blueV = loadImage("blueV.png");
+  blueV.resize(103,103);
+  blueH = loadImage("blueH.png");
+  blueH.resize(103,103);
   purple = loadImage("purple.png");
   purple.resize(90,90);
+  purpleV = loadImage("purpleV.png");
+  purpleV.resize(103,103);
+  purpleH = loadImage("purpleH.png");
+  purpleH.resize(103,103);
   orange = loadImage("orange.png");
   orange.resize(90,90);
+  orangeV = loadImage("orangeV.png");
+  orangeV.resize(103,103);
+  orangeH = loadImage("orangeH.png");
+  orangeH.resize(103,103);
   green = loadImage("green.png");
   green.resize(90,90);
+  greenV = loadImage("greenV.png");
+  greenV.resize(103,103);
+  greenH = loadImage("greenH.png");
+  greenH.resize(103,103);
   yellow = loadImage("yellow.png");
   yellow.resize(90,90);
+  yellowV = loadImage("yellowV.png");
+  yellowV.resize(103,103);
+  yellowH = loadImage("yellowH.png");
+  yellowH.resize(103,103);
   red = loadImage("red.png");
-  red.resize(90,90);
+  red.resize(105,105);
+  redV = loadImage("redV.png");
+  redV.resize(105, 105);
+  redH = loadImage("redH.png");
+  redH.resize(105,105);
   size(810,830);
   ROWS = 9;
   COLS = 9;
@@ -50,7 +89,10 @@ void setup() {
   rulesX = 200;
   rulesY = 40;
   
-  // HOME
+  home();
+}
+
+void home() {
   background(homebackground);
   noStroke();
   textSize(35);
@@ -66,19 +108,27 @@ void setup() {
   noFill();
 }
 
+void rules() {
+  background(color(255));
+}
+
 void keyPressed() { 
   if(key == 'h'){
     page = "home";
+    home();
   }
   if(key == 'g'){
     page = "game";
     LEVEL = 1;
     GOAL = 1000;
     score = 0;
+    displayLog();
     b.crush();
+    game();
   }
  if(key == 'r'){
     page = "rules";
+    rules();
   }
   if (key == ' ') b = new Board(9);
   if (key == CODED) {
@@ -92,9 +142,9 @@ void keyPressed() {
       if (LEVEL == 5) GOAL = 5;
       b = new Board(9);
       displayLog();
-      game();
       b.crush();
-      b.gravity();
+      //b.gravity();
+      game();
     }
   }
 }
@@ -112,7 +162,7 @@ void mouseClicked(){
   }
    else if(inShape(320, 505, rulesX, rulesY)){
      page = "rules";
-     background(color(255));
+     rules();
    }
  }
  
@@ -125,7 +175,7 @@ void mouseClicked(){
       score += b.crush() * 50;
     }
     else b.crush();
-    b.gravity();
+    //b.gravity();
     if (LEVEL == 3 || LEVEL == 4 || LEVEL == 5) { // increment moves taken
       score++;
       b.crush();
@@ -147,6 +197,7 @@ void mouseClicked(){
 
 void highlight(int x, int y) {
   stroke(255, 255, 255);
+  strokeWeight(4);
   noFill();
   square(x, y, SQUARESIZE);
 }
@@ -224,9 +275,13 @@ void game() {
         if (piece.getColor().equals("red")) {
            image(red, x*SQUARESIZE, y*SQUARESIZE);
         }
+         if (piece.getColor().equals("liquorice")) {
+          image(liquorice, x*SQUARESIZE, y*SQUARESIZE);
+        }
       }
   }
 }
+
 
 //void drawSquares() {
 //  stroke(0);
