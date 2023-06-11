@@ -6,6 +6,9 @@ Candy initial;
 Candy second;
 Board b;
 PImage gamebackground;
+PImage rulebackground; 
+PImage candy3;
+PImage candy4;
 PImage blue;
 PImage blueV;
 PImage blueH;
@@ -26,6 +29,7 @@ PImage redV;
 PImage redH;
 PImage homebackground;
 PImage liquorice;
+PImage liquoriceR;
 String page = "home";
 int playX, playY;
 int rulesX, rulesY;
@@ -37,11 +41,19 @@ int m;
 
 
 void setup() {
+  rulebackground = loadImage("ruleBack.png");
+  rulebackground.resize(810,830);
+  candy3 = loadImage("3candy.png");
+  candy3.resize(175,100);
+  candy4 = loadImage("4candy.png");
+  candy4.resize(235,66);
   homebackground = loadImage("homebackground.jpg");
   homebackground.resize(810,830);
   gamebackground = loadImage("background.jpg");
   liquorice = loadImage("liquorice.png");
   liquorice.resize(90,90);
+  liquoriceR = loadImage("liquorice.png");
+  liquoriceR.resize(65,65);
   blue = loadImage("blue.png");
   blue.resize(90,90);
   blueV = loadImage("blueV.png");
@@ -113,7 +125,38 @@ void home() {
 }
 
 void rules() {
-  background(color(255));
+  background(rulebackground);
+  fill(121,38,68);
+  textSize(45);
+  text("HOW TO PLAY", 285, 90 );
+  textSize(20);
+  text("1.", 70, 150 );
+  text("Click on a candy and and then", 91, 150 );
+  text("click on another candy to swap", 91, 172);
+  text("it. Match 3 candies of the same", 91, 194); 
+  text("color to clear them.", 91, 216);
+  noFill();
+  image(candy3, 93, 238);
+  text("2.", 460, 150 );
+  text("Matching 4 candies will", 482, 150);
+  text("produce a striped candy", 482, 172); 
+  text("which one can swap with", 482, 194);
+  text("another regular or striped ", 482, 216 );
+  text("candy of the same color.", 482, 238 );
+  image(candy4, 454, 250);
+  text("3.", 70, 383 );
+  text("Liquorice pieces can not", 91, 383 );
+  text("be swapped with any other", 91, 405);
+  text("type of candies and will", 91, 427); 
+  text("only appear in Level 4 & 5.", 91, 449);
+  image(liquoriceR, 155, 462);
+  text("4.", 460, 383 );
+  text("There is a total of 5", 481, 383 );
+  text("levels. Each level can", 481, 405);
+  text("be passed by meeting the", 481, 427); 
+  text("Point or Move Goals.", 481, 449);
+
+  noFill();
 }
 
 void keyPressed() { 
@@ -173,7 +216,7 @@ void mouseClicked(){
   if(inShape(320, 405, playX, playY)){
     page = "game";
     LEVEL = 1;
-    points = 10000;
+    points = 1000;
     moves = 15;
     score = 0;
     m = 0;
