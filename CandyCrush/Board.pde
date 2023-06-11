@@ -166,34 +166,53 @@ public class Board {
     return false;
   }
   
+  boolean contained (String a, String b, String c, String d) {
+    if (a.equals("") || b.equals("") || c.equals("") || d.equals("")) return false;
+    return (
+    a.contains(b) && a.contains(c) && a.contains(d) ||
+    b.contains(a) && b.contains(c) && b.contains(d) ||
+    c.contains(a) && c.contains(b) && c.contains(d) ||
+    d.contains(a) && d.contains(b) && d.contains(c)
+    );
+  }
+  
+  boolean contained (String a, String b, String c) {
+    if (a.equals("") || b.equals("") || c.equals("")) return false;
+    return (
+    a.contains(b) && a.contains(c) ||
+    b.contains(a) && b.contains(c) ||
+    c.contains(a) && c.contains(b)
+    );
+  }
+  
   boolean compareH4(int x, int y) {
-    Candy a = getCandy(x, y);
-    Candy b = getCandy(x+1, y);
-    Candy c = getCandy(x+2, y);
-    Candy d = getCandy(x+3, y);
-    return (a.getColor().contains(b.getColor()) && a.getColor().contains(c.getColor()) && a.getColor().contains(d.getColor()));
+    String a = getCandy(x, y).getColor();
+    String b = getCandy(x+1, y).getColor();
+    String c = getCandy(x+2, y).getColor();
+    String d = getCandy(x+3, y).getColor();
+    return contained(a, b, c, d);
   }
   
   boolean compareV4(int x, int y) {
-    Candy a = getCandy(x, y);
-    Candy b = getCandy(x, y+1);
-    Candy c = getCandy(x, y+2);
-    Candy d = getCandy(x, y+3);
-    return (a.getColor().contains(b.getColor()) && a.getColor().contains(c.getColor()) && a.getColor().contains(d.getColor()));
+    String a = getCandy(x, y).getColor();
+    String b = getCandy(x, y+1).getColor();
+    String c = getCandy(x, y+2).getColor();
+    String d = getCandy(x, y+3).getColor();
+    return contained(a, b, c, d);
   }
   
   boolean compareH3(int x, int y) {
-    Candy a = getCandy(x-1, y);
-    Candy b = getCandy(x, y);
-    Candy c = getCandy(x+1, y);
-    return (a.getColor().contains(b.getColor()) && a.getColor().contains(c.getColor()));
+    String a = getCandy(x-1, y).getColor();
+    String b = getCandy(x, y).getColor();
+    String c = getCandy(x+1, y).getColor();
+    return contained(a, b, c);
   }
   
   boolean compareV3(int x, int y) {
-    Candy a = getCandy(x, y-1);
-    Candy b = getCandy(x, y);
-    Candy c = getCandy(x, y+1);
-    return (a.getColor().contains(b.getColor()) && a.getColor().contains(c.getColor()));
+    String a = getCandy(x, y-1).getColor();
+    String b = getCandy(x, y).getColor();
+    String c = getCandy(x, y+1).getColor();
+    return contained(a, b, c);
   }
   
   int crush() {
@@ -202,20 +221,26 @@ public class Board {
     for(int x = 0; x<size()-3; x++) {
       for(int y = 0; y<size(); y++) {
         if (compareH4(x, y)) {
-          board[x][y] = new Candy(board[x+1][y].getColor()+"H", x, y);
+          String c = getCandy(x,y).getColor()+"H";
+          board[x][y] = new Candy(c, x, y);
+          System.out.println(board[x][y].getColor());
           board[x+1][y] = new Candy();
           board[x+2][y] = new Candy();
           board[x+3][y] = new Candy();
+          result++;
         }
       }
     }
     for(int x = 0; x<size(); x++) {
       for(int y = 0; y<size()-3; y++) {
         if (compareV4(x, y)) {
-          board[x][y] = new Candy(board[x][y+1].getColor()+"V", x, y);
+          String c = getCandy(x,y).getColor()+"V";
+          board[x][y] = new Candy(c, x, y);
+          System.out.println(board[x][y].getColor());
           board[x][y+1] = new Candy();
           board[x][y+2] = new Candy();
           board[x][y+3] = new Candy();
+          result++;
         }
       }
     }
@@ -240,6 +265,7 @@ public class Board {
         }
       }
     }
+    gravity();
     return result;
   }
   
