@@ -271,7 +271,7 @@ boolean inShape(int x, int y, int rectlength, int rectheight)  {
 }
 
 void draw() {
- println(frameRate);
+ //println(frameRate);
  //if(page.equals("rules")){
  //  background(color(255));
  //}
@@ -292,13 +292,10 @@ void draw() {
  //}
  
  if(page.equals("game")){
-   boolean swapped = b.isMove();
- // displayLog();
-  //game();
-  score += b.crush() * 50;
-  b.gravity();
-  
-  if (swapped) game();
+  if(b.isMove()) {
+    score += b.crush() * 50;
+    game();
+  }
  }
 }
 void displayLog(){
