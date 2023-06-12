@@ -34,9 +34,5 @@ public class Candy{
     return colors;
   }
   
-  boolean validCandy(){
-    return true;
-  }
-  
   
 }
