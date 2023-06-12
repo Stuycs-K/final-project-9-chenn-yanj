@@ -5,7 +5,13 @@ boolean click = false;
 Candy initial;
 Candy second;
 Board b;
+PImage banner;
+PImage levelbackground;
 PImage gamebackground;
+PImage rulebackground; 
+PImage candy3;
+PImage candy4;
+PImage finalbackground;
 PImage blue;
 PImage blueV;
 PImage blueH;
@@ -26,6 +32,11 @@ PImage redV;
 PImage redH;
 PImage homebackground;
 PImage liquorice;
+PImage liquoriceR;
+PImage level;
+PImage Tiffi;
+PImage Toffe;
+PImage Yeti;
 String page = "home";
 int playX, playY;
 int rulesX, rulesY;
@@ -37,11 +48,32 @@ int m;
 
 
 void setup() {
+  finalbackground = loadImage("final.png");
+  finalbackground.resize(810,830);
+  levelbackground = loadImage("levelbackground.jpg");
+  levelbackground.resize(810,830);
+  Tiffi = loadImage("Tiffi.png");
+  Tiffi.resize(200,173);
+  Toffe = loadImage("Troll.png");
+  Toffe.resize(200,145);
+  Yeti = loadImage("Yeti.png");
+  level = loadImage("LEVEL.png");
+  level.resize(75,18);
+  rulebackground = loadImage("ruleBack.png");
+  rulebackground.resize(810,830);
+  banner = loadImage("ruleBack.png");
+  banner.resize(818, 208);
+  candy3 = loadImage("3candy.png");
+  candy3.resize(175,100);
+  candy4 = loadImage("4candy.png");
+  candy4.resize(235,66);
   homebackground = loadImage("homebackground.jpg");
   homebackground.resize(810,830);
   gamebackground = loadImage("background.jpg");
   liquorice = loadImage("liquorice.png");
   liquorice.resize(90,90);
+  liquoriceR = loadImage("liquorice.png");
+  liquoriceR.resize(65,65);
   blue = loadImage("blue.png");
   blue.resize(90,90);
   blueV = loadImage("blueV.png");
@@ -113,8 +145,45 @@ void home() {
 }
 
 void rules() {
-  background(color(255));
+  background(rulebackground);
+  fill(121,38,68);
+  textSize(45);
+  text("HOW TO PLAY", 280, 90 );
+  textSize(35);
+  text("ENJOY!", 340, 560);
+  textSize(20);
+  text("1.", 70, 150 );
+  text("Click on a candy and and then", 91, 150 );
+  text("click on another candy to swap", 91, 172);
+  text("it. Match 3 candies of the same", 91, 194); 
+  text("color to clear them.", 91, 216);
+  noFill();
+  image(candy3, 93, 238);
+  text("2.", 460, 150 );
+  text("Matching 4 candies will", 482, 150);
+  text("produce a striped candy", 482, 172); 
+  text("which one can swap with", 482, 194);
+  text("another regular or striped ", 482, 216 );
+  text("candy of the same color.", 482, 238 );
+  image(candy4, 454, 250);
+  text("3.", 70, 383 );
+  text("Liquorice pieces can not", 91, 383 );
+  text("be swapped with any other", 91, 405);
+  text("type of candies and will", 91, 427); 
+  text("only appear in Level 4 & 5.", 91, 449);
+  image(liquoriceR, 155, 462);
+  text("4.", 460, 383 );
+  text("There is a total of 5", 481, 383 );
+  text("levels. Each level can", 481, 405);
+  text("be passed by meeting the", 481, 427); 
+  text("Point or Move Goals.", 481, 449);
+  image(level, 535, 470);
+  image(Tiffi, 90, 600);
+  image(Toffe, 320, 610);
+  image(Yeti, 530, 610);
+  noFill();
 }
+
 
 void keyPressed() { 
   if(key == 'h'){
@@ -136,7 +205,13 @@ void keyPressed() {
     page = "rules";
     rules();
   }
-  if (key == ' ') b = new Board(9);
+  if (key == ' ') {
+    b = new Board(9);
+    //b.crush();
+    //displayLog();
+    //game(); 
+  }
+  
   if (key == CODED) {
     if (keyCode == RIGHT) {
       LEVEL++;
@@ -168,7 +243,48 @@ void keyPressed() {
   }
 }
 
+void level(){
+      if (LEVEL == 6) LEVEL = 1;
+      score = 0;
+      m = 0;
+      if (LEVEL == 2) {
+        points = 15000;
+        moves = 10;
+      }
+      if (LEVEL == 3) {
+        points = 20000;
+        moves = 10;
+      }
+      if (LEVEL == 4) {
+        points = 20000;
+        moves = 8;
+      }
+      if (LEVEL == 5) {
+        points = 20000;
+        moves = 5;
+      }
+      b = new Board(9);
+      displayLog();
+      b.crush();
+      //b.gravity();
+      game();
+}
+
 void mouseClicked(){
+ if(page.equals("levelL")){
+   if(inShape(292, 405, 200, 40)){
+     page = "game";
+     level();
+  }
+ }
+ if(page.equals("levelW")){
+   if(inShape(292, 405, 200, 40)){
+     page = "game";
+     LEVEL++;
+     level();
+  }
+ }
+ 
  if(page.equals("home")){
   if(inShape(320, 405, playX, playY)){
     page = "game";
@@ -187,7 +303,7 @@ void mouseClicked(){
    }
  }
  
- if(page.equals("game")){
+ if(page.equals("game")){  
   if (click) {
     second = b.getCandy((int)(mouseX/SQUARESIZE), (int)(mouseY/SQUARESIZE));
     b.swap(initial, second);
@@ -251,8 +367,10 @@ void draw() {
  if(page.equals("game")){
   if(b.isMove()) {
     score += b.crush() * 50;
+    displayLog();
     game();
   }
+  gameOver();
  }
 }
 void displayLog(){
@@ -331,12 +449,59 @@ void game() {
   }
 }
 
+void gameOver(){
+ if(m>moves && score < points){
+   page = "levelL";   
+   background(levelbackground);
+   image(banner, -5, 300);//lose
+   fill(240,74,110);
+   textSize(36);
+   text("LEVEL FAILED!", 292,367);
+   fill(255,92,168);
+   rect(292, 405, playX, playY);
+   fill(255);
+   text("RETRY", 345, 436);
+   noFill();
+   textSize(16);
+   fill(8,123,250,255);
+   text("If you wish to return to the Homepage click the button 'h'", 223, 485);
+   noFill();
+ }
+ if(m <= moves && score>=points){
+  if(LEVEL < 5){
+   page = "levelW";   
+   background(levelbackground);
+   image(banner, -5, 300);//win
+   fill(240,74,110);
+   textSize(36);
+   text("LEVEL PASSED!", 292,367);
+   fill(255,92,168);
+   rect(292, 405, playX, playY);
+   fill(255);
+   text("NEXT", 355, 436);
+   noFill();
+   textSize(16);
+   fill(8,123,250,255);
+   text("If you wish to return to the Homepage click the button 'h'", 223, 485);
+   noFill();
+  }
+ else{
+   page = "final"; 
+   background(finalbackground);
+   image(banner, -5, 300);//win
+   fill(147,75,112);
+   textSize(36);
+   text("CONGRATS", 315,367);
+   text("YOU'VE COMPLETED ALL THE LEVELS!", 115,425);
+   textSize(16);
+   fill(8,123,250,255);
+   text("If you wish to return to the Homepage click the button 'h'", 223, 485);
+   noFill();
+   
+ }
+ }
+ 
 
-//void drawSquares() {
-//  stroke(0);
-//  for (int x = 0; x < width; x+=SQUARESIZE) {
-//    for (int y = 0; y < height; y+=SQUARESIZE) {
-//      square(x,y,SQUARESIZE);
-//    }
-//  }
-//}
+ 
+ 
+}
