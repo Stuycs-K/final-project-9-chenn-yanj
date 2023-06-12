@@ -44,11 +44,20 @@ public class Board {
       second.setY(y1);
     }
   }
+  
+  String colorOnly(String c) {
+    if (c.charAt(c.length()-1) == 'H' || c.charAt(c.length()-1) == 'V') c = c.substring(0, c.length()-1);
+    return c;
+  }
 
   boolean canMove(int i, int x, Candy piece) {
     if (piece.getColor().equals("liquorice")) return false;
     if (i >= 0 && i<=board.length-1 && x>=0 && x<=board[0].length-1) {
-      if ((board[i][x].getColor()).contains(piece.getColor()) || piece.getColor().contains(board[i][x].getColor())) {
+      String c1 = board[i][x].getColor();
+      String c2 = piece.getColor();
+      c1 = colorOnly(c1);
+      c2 = colorOnly(c2);
+      if (c1.equals(c2)) {
         return true;
       }
     }
@@ -167,21 +176,19 @@ public class Board {
 
   boolean contained (String a, String b, String c, String d) {
     if (a.equals("") || b.equals("") || c.equals("") || d.equals("")) return false;
-    return (
-      a.contains(b) && a.contains(c) && a.contains(d) ||
-      b.contains(a) && b.contains(c) && b.contains(d) ||
-      c.contains(a) && c.contains(b) && c.contains(d) ||
-      d.contains(a) && d.contains(b) && d.contains(c)
-      );
+    a = colorOnly(a);
+    b = colorOnly(b);
+    c = colorOnly(c);
+    d = colorOnly(d);
+    return (a.equals(b) && a.equals(c) && a.equals(d));
   }
 
   boolean contained (String a, String b, String c) {
     if (a.equals("") || b.equals("") || c.equals("")) return false;
-    return (
-      a.contains(b) && a.contains(c) ||
-      b.contains(a) && b.contains(c) ||
-      c.contains(a) && c.contains(b)
-      );
+    a = colorOnly(a);
+    b = colorOnly(b);
+    c = colorOnly(c);
+    return (a.equals(b) && a.equals(c));
   }
 
   boolean compareH4(int x, int y) {
@@ -243,7 +250,7 @@ public class Board {
     for (int x = 0; x<size()-3; x++) {
       for (int y = 0; y<size(); y++) {
         if (compareH4(x, y)) {
-          if (isStripedH(getCandy(x,y))) clearRow(y);
+          String c = getCandy(x,y).getColor()+"H";
           if (isStripedH(getCandy(x, y)) || isStripedH(getCandy(x+1, y)) || isStripedH(getCandy(x+2, y)) || isStripedH(getCandy(x+3, y))) {
             clearRow(y);
           } 
@@ -251,7 +258,6 @@ public class Board {
           if (isStripedV(getCandy(x+1,y))) clearCol(x+1);
           if (isStripedV(getCandy(x+2,y))) clearCol(x+2);
           if (isStripedV(getCandy(x+3,y))) clearCol(x+3);
-            String c = getCandy(x, y).getColor()+"H";
             board[x][y] = new Candy(c, x, y);
             board[x+1][y] = new Candy();
             board[x+2][y] = new Candy();
@@ -263,6 +269,7 @@ public class Board {
     for (int x = 0; x<size(); x++) {
       for (int y = 0; y<size()-3; y++) {
         if (compareV4(x, y)) {
+          String c = getCandy(x, y).getColor()+"V";
           if (isStripedV(getCandy(x, y)) || isStripedV(getCandy(x, y+1)) || isStripedV(getCandy(x, y+2)) || isStripedV(getCandy(x, y+3))) {
             clearCol(x);
           } 
@@ -270,7 +277,6 @@ public class Board {
           if (isStripedH(getCandy(x,y+1))) clearRow(y+1);
           if (isStripedH(getCandy(x,y+2))) clearRow(y+2);
           if (isStripedH(getCandy(x,y+3))) clearRow(y+3);
-            String c = getCandy(x, y).getColor()+"V";
             board[x][y] = new Candy(c, x, y);
             board[x][y+1] = new Candy();
             board[x][y+2] = new Candy();
@@ -353,4 +359,5 @@ public class Board {
       }
     }
   }
+  
 }
