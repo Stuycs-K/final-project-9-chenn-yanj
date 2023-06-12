@@ -55,6 +55,17 @@ uploaded striped pictures
 added code for liquorice in later levels
 started gameOver  
 
+###June 10th, 2023
+added rule page
+added buttons to access the pages
+
+###June 11th, 2023
+added gameOver method
+added banners after completion of each banner
+added final winning menu
+background music implemented
+
+
 ## NIKI
 
 ### May 22nd, 2023
@@ -87,3 +98,11 @@ reshuffle for user if there are no more valid moves
 fixed flickering highlight by moving methods out of draw
 started 4-candy link methods
 created separate categories for game log
+
+###June 10th, 2023
+fixed 4 candy link to spawn striped candy when link forms
+
+###June 11th, 2023
+fixed striped 3 candy link both the vertical and the horizontal version
+allowed for striped candies to clear row/columns when candy creates link
+fix striped candy
