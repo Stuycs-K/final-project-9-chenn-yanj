@@ -44,11 +44,20 @@ public class Board {
       second.setY(y1);
     }
   }
+  
+  String colorOnly(String c) {
+    if (c.charAt(c.length()-1) == 'H' || c.charAt(c.length()-1) == 'V') c = c.substring(0, c.length()-1);
+    return c;
+  }
 
   boolean canMove(int i, int x, Candy piece) {
     if (piece.getColor().equals("liquorice")) return false;
     if (i >= 0 && i<=board.length-1 && x>=0 && x<=board[0].length-1) {
-      if ((board[i][x].getColor()).contains(piece.getColor()) || piece.getColor().contains(board[i][x].getColor())) {
+      String c1 = board[i][x].getColor();
+      String c2 = piece.getColor();
+      c1 = colorOnly(c1);
+      c2 = colorOnly(c2);
+      if (c1.equals(c2)) {
         return true;
       }
     }
@@ -167,21 +176,19 @@ public class Board {
 
   boolean contained (String a, String b, String c, String d) {
     if (a.equals("") || b.equals("") || c.equals("") || d.equals("")) return false;
-    return (
-      a.contains(b) && a.contains(c) && a.contains(d) ||
-      b.contains(a) && b.contains(c) && b.contains(d) ||
-      c.contains(a) && c.contains(b) && c.contains(d) ||
-      d.contains(a) && d.contains(b) && d.contains(c)
-      );
+    a = colorOnly(a);
+    b = colorOnly(b);
+    c = colorOnly(c);
+    d = colorOnly(d);
+    return (a.equals(b) && a.equals(c) && a.equals(d));
   }
 
   boolean contained (String a, String b, String c) {
     if (a.equals("") || b.equals("") || c.equals("")) return false;
-    return (
-      a.contains(b) && a.contains(c) ||
-      b.contains(a) && b.contains(c) ||
-      c.contains(a) && c.contains(b)
-      );
+    a = colorOnly(a);
+    b = colorOnly(b);
+    c = colorOnly(c);
+    return (a.equals(b) && a.equals(c));
   }
 
   boolean compareH4(int x, int y) {
@@ -353,4 +360,5 @@ public class Board {
       }
     }
   }
+  
 }
