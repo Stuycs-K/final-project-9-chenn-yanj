@@ -34,4 +34,8 @@ public class Candy{
     return colors;
   }
   
+<<<<<<< HEAD
+  
+=======
+>>>>>>> 5a41c0fd38bbf2af150dc6c5828452c8f802ed9d
 }
