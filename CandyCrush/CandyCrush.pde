@@ -1,3 +1,4 @@
+import processing.sound.*;
 int ROWS;
 int COLS;
 int SQUARESIZE;
@@ -5,6 +6,7 @@ boolean click = false;
 Candy initial;
 Candy second;
 Board b;
+SoundFile music;
 PImage banner;
 PImage levelbackground;
 PImage gamebackground;
@@ -48,6 +50,8 @@ int m;
 
 
 void setup() {
+  music = new SoundFile(this, "music.mp3");
+  music.loop();
   finalbackground = loadImage("final.png");
   finalbackground.resize(810,830);
   levelbackground = loadImage("levelbackground.jpg");
@@ -189,12 +193,12 @@ void keyPressed() {
   if(key == 'h'){
     page = "home";
     home();
-  }
+  } //<>//
   if(key == 'g'){
     page = "game";
     LEVEL = 1;
-    points = 10000;
-    moves = 15;
+    points = 1000;
+    moves = 20;
     score = 0;
     m = 0;
     displayLog();
@@ -219,20 +223,20 @@ void keyPressed() {
       score = 0;
       m = 0;
       if (LEVEL == 2) {
-        points = 15000;
-        moves = 10;
+        points = 1500;
+        moves = 30;
       }
       if (LEVEL == 3) {
-        points = 20000;
-        moves = 10;
+        points = 2000;
+        moves = 35;
       }
       if (LEVEL == 4) {
-        points = 20000;
-        moves = 8;
+        points = 2000;
+        moves = 30;
       }
       if (LEVEL == 5) {
-        points = 20000;
-        moves = 5;
+        points = 3000;
+        moves = 37;
       }
       b = new Board(9);
       displayLog();
@@ -244,24 +248,24 @@ void keyPressed() {
 }
 
 void level(){
-      if (LEVEL == 6) LEVEL = 1;
+   if (LEVEL == 6) LEVEL = 1;
       score = 0;
       m = 0;
       if (LEVEL == 2) {
-        points = 15000;
-        moves = 10;
+        points = 1500;
+        moves = 30;
       }
       if (LEVEL == 3) {
-        points = 20000;
-        moves = 10;
+        points = 2000;
+        moves = 35;
       }
       if (LEVEL == 4) {
-        points = 20000;
-        moves = 8;
+        points = 2000;
+        moves = 30;
       }
       if (LEVEL == 5) {
-        points = 20000;
-        moves = 5;
+        points = 3000;
+        moves = 37;
       }
       b = new Board(9);
       displayLog();
@@ -289,8 +293,8 @@ void mouseClicked(){
   if(inShape(320, 405, playX, playY)){
     page = "game";
     LEVEL = 1;
-    points = 10000;
-    moves = 15;
+    points = 1000;
+    moves = 20;
     score = 0;
     m = 0;
     displayLog();
