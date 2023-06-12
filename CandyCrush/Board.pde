@@ -9,12 +9,15 @@ public class Board {
       }
     }
   }
+
   String randomCandy(int LEVEL) {
     int index = 0;
     String[] candies = {"blue", "purple", "orange", "green", "yellow", "red", "liquorice"};
     if ( LEVEL < 4) {
+      // does not include liquorice
       index = (int)(random(0, 6));
     } else {
+      // include liquorice
       index = (int)(random(0, 7));
     }
     return (candies[index]);
@@ -26,10 +29,12 @@ public class Board {
   }
 
   Candy getCandy(int x, int y) {
+    // check if out of bounds
     if (x < 0 || x > size()-1 || y < 0 || y > size()-1) return new Candy();
     return board[x][y];
   }
 
+  // switch position of two candies if valid
   void swap(Candy first, Candy second) {
     if (validMove(first, second)) {
       int x1 = first.getX();
@@ -44,12 +49,14 @@ public class Board {
       second.setY(y1);
     }
   }
-  
+
+  // remove "type" indicator in candy's color ("H"/"V")
   String colorOnly(String c) {
     if (c.charAt(c.length()-1) == 'H' || c.charAt(c.length()-1) == 'V') c = c.substring(0, c.length()-1);
     return c;
   }
 
+  // checks if colors of the two candies are the same
   boolean canMove(int i, int x, Candy piece) {
     if (piece.getColor().equals("liquorice")) return false;
     if (i >= 0 && i<=board.length-1 && x>=0 && x<=board[0].length-1) {
@@ -64,10 +71,8 @@ public class Board {
     return false;
   }
 
-
-
+  // checks to see if swapped candies create a valid horizontal link
   int horizontalLink(Candy one, Candy two) {
-    // check to see if new position makes a vertical link
     int x2 = two.getX();
     int y2 = two.getY();
 
@@ -111,6 +116,7 @@ public class Board {
     return 0;
   }
 
+  // checks to see if swapped candies create a valid vertical link
   int verticalLink(Candy one, Candy two) {
     int x2 = two.getX();
     int y2 = two.getY();
@@ -155,6 +161,7 @@ public class Board {
     return 0;
   }
 
+  // checks to see if swapping the two candies creates a crushable link
   boolean validMove(Candy one, Candy two) {
     if (one.getColor().equals("liquorice") || two.getColor().equals("liquorice")) return false;
     int x1 = one.getX();
@@ -174,6 +181,7 @@ public class Board {
     return false;
   }
 
+  // if four strings contain the same color
   boolean contained (String a, String b, String c, String d) {
     if (a.equals("") || b.equals("") || c.equals("") || d.equals("")) return false;
     a = colorOnly(a);
@@ -183,6 +191,7 @@ public class Board {
     return (a.equals(b) && a.equals(c) && a.equals(d));
   }
 
+  // if three strings contain the same color
   boolean contained (String a, String b, String c) {
     if (a.equals("") || b.equals("") || c.equals("")) return false;
     a = colorOnly(a);
@@ -191,6 +200,7 @@ public class Board {
     return (a.equals(b) && a.equals(c));
   }
 
+  // checks to see if four adjacent, horizontally-linked candies have the same color
   boolean compareH4(int x, int y) {
     String a = getCandy(x, y).getColor();
     String b = getCandy(x+1, y).getColor();
@@ -199,6 +209,7 @@ public class Board {
     return contained(a, b, c, d);
   }
 
+  // checks to see if four adjacent, vertically-linked candies have the same color
   boolean compareV4(int x, int y) {
     String a = getCandy(x, y).getColor();
     String b = getCandy(x, y+1).getColor();
@@ -207,6 +218,7 @@ public class Board {
     return contained(a, b, c, d);
   }
 
+  // checks to see if three adjacent, horizontally-linked candies have the same color
   boolean compareH3(int x, int y) {
     String a = getCandy(x-1, y).getColor();
     String b = getCandy(x, y).getColor();
@@ -214,6 +226,7 @@ public class Board {
     return contained(a, b, c);
   }
 
+  // checks to see if three adjacent, vertically-linked candies have the same color
   boolean compareV3(int x, int y) {
     String a = getCandy(x, y-1).getColor();
     String b = getCandy(x, y).getColor();
@@ -221,47 +234,52 @@ public class Board {
     return contained(a, b, c);
   }
 
+  // checks to see if candy is vertically striped
   boolean isStripedV(Candy candy) {
     String c = candy.getColor();
     if (c.length() == 0) return false;
     return (c.substring(c.length()-1).equals("V"));
   }
 
+  // checks to see if candy is horizontally striped
   boolean isStripedH(Candy candy) {
     String c = candy.getColor();
     if (c.length() == 0) return false;
     return (c.substring(c.length()-1).equals("H"));
   }
-  
+
+  // vertically striped candy crushes all candy in its column
   void clearCol(int x) {
     for (int y = 0; y < size(); y++) {
       board[x][y] = new Candy();
     }
   }
-  
+
+  // horizontally striped candy crushes all candy in its row
   void clearRow(int y) {
     for (int x = 0; x < size(); x++) {
       board[x][y] = new Candy();
     }
   }
 
+  // remove all links
   int crush() {
     int result = 0;
     for (int x = 0; x<size()-3; x++) {
       for (int y = 0; y<size(); y++) {
         if (compareH4(x, y)) {
-          String c = getCandy(x,y).getColor()+"H";
+          String c = colorOnly(getCandy(x, y).getColor())+"H";
           if (isStripedH(getCandy(x, y)) || isStripedH(getCandy(x+1, y)) || isStripedH(getCandy(x+2, y)) || isStripedH(getCandy(x+3, y))) {
             clearRow(y);
-          } 
-          if (isStripedV(getCandy(x,y))) clearCol(x);
-          if (isStripedV(getCandy(x+1,y))) clearCol(x+1);
-          if (isStripedV(getCandy(x+2,y))) clearCol(x+2);
-          if (isStripedV(getCandy(x+3,y))) clearCol(x+3);
-            board[x][y] = new Candy(c, x, y);
-            board[x+1][y] = new Candy();
-            board[x+2][y] = new Candy();
-            board[x+3][y] = new Candy();
+          }
+          if (isStripedV(getCandy(x, y))) clearCol(x);
+          if (isStripedV(getCandy(x+1, y))) clearCol(x+1);
+          if (isStripedV(getCandy(x+2, y))) clearCol(x+2);
+          if (isStripedV(getCandy(x+3, y))) clearCol(x+3);
+          board[x][y] = new Candy(c, x, y);
+          board[x+1][y] = new Candy();
+          board[x+2][y] = new Candy();
+          board[x+3][y] = new Candy();
           result++;
         }
       }
@@ -269,18 +287,18 @@ public class Board {
     for (int x = 0; x<size(); x++) {
       for (int y = 0; y<size()-3; y++) {
         if (compareV4(x, y)) {
-          String c = getCandy(x, y).getColor()+"V";
+          String c = colorOnly(getCandy(x, y).getColor())+"V";
           if (isStripedV(getCandy(x, y)) || isStripedV(getCandy(x, y+1)) || isStripedV(getCandy(x, y+2)) || isStripedV(getCandy(x, y+3))) {
             clearCol(x);
-          } 
-          if (isStripedH(getCandy(x,y))) clearRow(y);
-          if (isStripedH(getCandy(x,y+1))) clearRow(y+1);
-          if (isStripedH(getCandy(x,y+2))) clearRow(y+2);
-          if (isStripedH(getCandy(x,y+3))) clearRow(y+3);
-            board[x][y] = new Candy(c, x, y);
-            board[x][y+1] = new Candy();
-            board[x][y+2] = new Candy();
-            board[x][y+3] = new Candy();
+          }
+          if (isStripedH(getCandy(x, y))) clearRow(y);
+          if (isStripedH(getCandy(x, y+1))) clearRow(y+1);
+          if (isStripedH(getCandy(x, y+2))) clearRow(y+2);
+          if (isStripedH(getCandy(x, y+3))) clearRow(y+3);
+          board[x][y] = new Candy(c, x, y);
+          board[x][y+1] = new Candy();
+          board[x][y+2] = new Candy();
+          board[x][y+3] = new Candy();
           result++;
         }
       }
@@ -291,13 +309,13 @@ public class Board {
         if (compareH3(x, y)) {
           if (isStripedH(getCandy(x, y)) || isStripedH(getCandy(x-1, y)) || isStripedH(getCandy(x+1, y))) {
             clearRow(y);
-          } 
-          if (isStripedV(getCandy(x,y))) clearCol(x);
-          if (isStripedV(getCandy(x-1,y))) clearCol(x-1);
-          if (isStripedV(getCandy(x+1,y))) clearCol(x+1);
-            board[x-1][y] = new Candy();
-            board[x][y] = new Candy();
-            board[x+1][y] = new Candy();
+          }
+          if (isStripedV(getCandy(x, y))) clearCol(x);
+          if (isStripedV(getCandy(x-1, y))) clearCol(x-1);
+          if (isStripedV(getCandy(x+1, y))) clearCol(x+1);
+          board[x-1][y] = new Candy();
+          board[x][y] = new Candy();
+          board[x+1][y] = new Candy();
           result++;
         }
       }
@@ -307,13 +325,13 @@ public class Board {
         if (compareV3(x, y)) {
           if (isStripedV(getCandy(x, y)) || isStripedV(getCandy(x, y-1)) || isStripedV(getCandy(x, y+1))) {
             clearCol(x);
-          } 
-          if (isStripedH(getCandy(x,y))) clearRow(y);
-          if (isStripedH(getCandy(x,y-1))) clearRow(y-1);
-          if (isStripedH(getCandy(x,y+1))) clearRow(y+1);
-            board[x][y-1] = new Candy();
-            board[x][y] = new Candy();
-            board[x][y+1] = new Candy();
+          }
+          if (isStripedH(getCandy(x, y))) clearRow(y);
+          if (isStripedH(getCandy(x, y-1))) clearRow(y-1);
+          if (isStripedH(getCandy(x, y+1))) clearRow(y+1);
+          board[x][y-1] = new Candy();
+          board[x][y] = new Candy();
+          board[x][y+1] = new Candy();
           result++;
         }
       }
@@ -322,6 +340,7 @@ public class Board {
     return result;
   }
 
+  // checks to see if there is a valid move in board
   boolean isMove() {
     boolean result = false;
     for (int x = 1; x<size()-1; x++) {
@@ -341,6 +360,7 @@ public class Board {
     return result;
   }
 
+  // recursively pushes candies from top to bottom to fill in empty slots
   void pushdown(int x, int y) {
     if (y == 0 && board[x][y].getColor().equals("")) {
       board[x][y] = new Candy(randomCandy(LEVEL), x, y);
@@ -352,6 +372,7 @@ public class Board {
     }
   }
 
+  // goes through entire board and shifts everything down to fill in empty slots
   void gravity() {
     for ( int x = 0; x< size(); x ++) {
       for (int y = 0; y< size(); y ++) {
@@ -359,5 +380,4 @@ public class Board {
       }
     }
   }
-  
 }
