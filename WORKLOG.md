@@ -1,4 +1,4 @@
-#Working Features
+###Working Features
 - play and rules button on home page
 - "h": to go back to home page
 - "g": to start game at first level
@@ -17,11 +17,11 @@
 - option to move on to the next level if level passed or retry level if failed
 - winning menu at the completion of five levels
 
-#Broken Features
+###Broken Features
 - sometimes a candy might not appear but it will go away when gravity() is called on the empty boxes row or column
 - liquorice blocks do not follow conventional rule of blocks in candyCrush (eg. liquorice blocks moveable instead of stationary)
 
-#Content Resources
+###Content Resources
 - https://candycrush.fandom.com/wiki/Candy_Crush_Saga_Wiki (Extensive Information about the game)
 - Candy Crush game
 - Processing Documentation
