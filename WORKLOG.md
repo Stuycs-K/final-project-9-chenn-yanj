@@ -1,3 +1,5 @@
+# Dev Log
+
 ###Working Features
 - play and rules button on home page
 - "h": to go back to home page
